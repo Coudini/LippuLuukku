@@ -6,6 +6,7 @@
 - For api-calls the application uses TicketMasters api-services.
  ###### other possible functionality
 - Possibility to save venues and/or entertainers in a favorites-list.
+- Search by artist -> show locations/dates
 - Image/video data?
 - Count down timer / ETA
 - Weather conditions on given date? (given-date can't be too far in the future)
