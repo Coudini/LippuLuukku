@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
-class SecondActivity : AppCompatActivity(), LocationListener {
+class PreferencesActivity : AppCompatActivity(), LocationListener {
 
     lateinit var text : TextView
     lateinit var locationText : TextView
@@ -29,7 +29,7 @@ class SecondActivity : AppCompatActivity(), LocationListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_second)
+        setContentView(R.layout.activity_preferences)
 
         this.text = findViewById(R.id.exrasText)
         this.locationText = findViewById(R.id.locationText)
