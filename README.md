@@ -1,3 +1,4 @@
+
 # LippuLuukku
 
 ## Topic
@@ -16,3 +17,6 @@ Android/Kotlin
 
 ## GooglePlay/Appstore Link
 -
+
+## Draft of basic functionality diagram
+<img width="827" alt="lippuluukku" src="https://user-images.githubusercontent.com/56744277/117538075-2662ba80-b00d-11eb-95d3-bf58f00656fe.png">
