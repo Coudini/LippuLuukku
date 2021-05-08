@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun activityButtonClick(button : View) {
-        val intent = Intent(this, SecondActivity::class.java)
+        val intent = Intent(this, PreferencesActivity::class.java)
         intent.putExtra("testKey","testData")
         startActivityForResult(intent,666)
     }
