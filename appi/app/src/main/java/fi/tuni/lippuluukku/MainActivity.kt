@@ -16,6 +16,7 @@ import kotlin.concurrent.thread
 import com.fasterxml.jackson.databind.ObjectMapper
 
 class MainActivity : AppCompatActivity() {
+
     lateinit var text : TextView
     lateinit var button : Button
     lateinit var activityButton : Button

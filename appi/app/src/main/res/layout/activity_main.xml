@@ -39,15 +39,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="horizontal">
 
-        >
         <ImageButton
             android:id="@+id/imageButtonPreferences"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+
             app:srcCompat="@android:drawable/ic_menu_preferences" />
+
         <ImageButton
             android:id="@+id/imageButtonSearch"
             android:layout_width="wrap_content"
@@ -58,3 +59,5 @@
     </LinearLayout>
 
 </LinearLayout>
+
+    <!-- android:background="@android:color/transparent" -->
