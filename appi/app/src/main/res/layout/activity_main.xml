@@ -14,7 +14,27 @@
         android:text="Hello World!" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="button"/>
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="button"/>
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="button"/>
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="button"/>
+    <Button
+        android:id="@+id/button5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="button"/>
@@ -30,6 +50,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="search"/>
+
+    <Spinner
+        android:id="@+id/locationSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown"/>
+
+    <Spinner
+        android:id="@+id/keywordSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dialog"/>
 
     <Space
         android:layout_height="match_parent"

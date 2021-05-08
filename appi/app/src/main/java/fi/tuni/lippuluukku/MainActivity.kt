@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
+import android.widget.Spinner
 import android.widget.TextView
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -18,8 +20,19 @@ import com.fasterxml.jackson.databind.ObjectMapper
 class MainActivity : AppCompatActivity() {
 
     lateinit var text : TextView
-    lateinit var button : Button
+    lateinit var button1 : Button
+    lateinit var button2 : Button
+    lateinit var button3 : Button
+    lateinit var button4 : Button
+    lateinit var button5 : Button
     lateinit var activityButton : Button
+
+    lateinit var locationSpinner : Spinner
+    lateinit var keywordSpinner : Spinner
+    lateinit var keyWordText : EditText
+    lateinit var cityText : EditText
+
+    val testArray = arrayOf("one","two","three")
 
     var apikey : String = "wl5A0tEYNyQIQ9cTVA9VGVWlB3R8NgfO"
     var band = "metallica"
@@ -41,18 +54,41 @@ class MainActivity : AppCompatActivity() {
     //request with geopoint(lat,lon) and search radius
     var url4 : String = "https://app.ticketmaster.com/discovery/v2/events?apikey=${apikey}&radius=${radius}&locale=*&geoPoint=${latlonString}"
 
+    //request with keyword, geopoint(lat,lon) and search radius
+    var url5 :String = "https://app.ticketmaster.com/discovery/v2/events?apikey=${apikey}&keyword=${band}&radius=${radius}&locale=*&geoPoint=${latlonString}"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         this.text = findViewById(R.id.text)
-        this.button = findViewById(R.id.button)
-        this.button.setOnClickListener(){
-            this.buttonFunc(this.button)
+        this.button1 = findViewById(R.id.button1)
+        this.button1.setOnClickListener(){
+            this.buttonFunc(this.button1, url1)
+        }
+        this.button2 = findViewById(R.id.button2)
+        this.button2.setOnClickListener(){
+            this.buttonFunc(this.button2, url2)
+        }
+        this.button3 = findViewById(R.id.button3)
+        this.button3.setOnClickListener(){
+            this.buttonFunc(this.button3, url3)
+        }
+        this.button4 = findViewById(R.id.button4)
+        this.button4.setOnClickListener(){
+            this.buttonFunc(this.button4, url4)
+        }
+        this.button5 = findViewById(R.id.button5)
+        this.button5.setOnClickListener(){
+            this.buttonFunc(this.button5, url5)
         }
         this.activityButton = findViewById(R.id.activityButton)
         this.activityButton.setOnClickListener(){
             this.activityButtonClick(this.activityButton)
         }
+        this.locationSpinner = findViewById(R.id.locationSpinner)
+
+        this.keywordSpinner = findViewById(R.id.keywordSpinner)
+
     }
 
     fun activityButtonClick(button : View) {
@@ -71,8 +107,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun buttonFunc(button : View){
-        downloadUrlAsync(this, this.url1){
+    fun buttonFunc(button : View, url: String){
+        downloadUrlAsync(this, url){
             //var resultti : String? = it
             //val mp = ObjectMapper()
             //val myObject: StarWarsJsonObject = mp.readValue(it, StarWarsJsonObject::class.java)
