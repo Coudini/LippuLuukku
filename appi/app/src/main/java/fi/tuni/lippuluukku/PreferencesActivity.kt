@@ -26,7 +26,10 @@ class PreferencesActivity : AppCompatActivity() {
 
         val extras = intent.extras
         if(extras != null) {
-            Log.d("extras",extras.getString("testKey").toString())
+            val testArray1 = extras.getStringArray("locationsArray")
+            val testArray2 = extras.getStringArray("keywordsArray")
+            Log.d("extras", testArray1?.count().toString())
+            Log.d("extras", testArray2?.count().toString())
         }
         animateBackground()
     }

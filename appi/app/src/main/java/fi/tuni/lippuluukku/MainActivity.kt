@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
     }
 
-    fun getLocation () {
+    private fun getLocation () {
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCode)
@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 50000, 50f, this)
     }
 
-    fun animateBackground(){
+    private fun animateBackground(){
         val linearLayout : LinearLayout = findViewById(R.id.layout)
         val animationDrawable : AnimationDrawable = linearLayout.getBackground() as AnimationDrawable
         animationDrawable.setEnterFadeDuration(2000)
@@ -99,14 +99,14 @@ class MainActivity : AppCompatActivity(), LocationListener {
         animationDrawable.start()
     }
 
-    fun preferencesOnClick(button:View){
+    private fun preferencesOnClick(button:View){
         val preferencesIntent = Intent(this, PreferencesActivity::class.java)
         preferencesIntent.putExtra("locationsArray",this.locationsArray)
         preferencesIntent.putExtra("keywordsArray",this.keywordsArray)
         startActivityForResult(preferencesIntent, 1)
     }
 
-    fun searchOnClick(button:View) {
+    private fun searchOnClick(button:View) {
         val resultsIntent = Intent(this, ResultsActivity::class.java)
         //resultsIntent.putExtra("searchUrl", this.url1)
         startActivity(resultsIntent)

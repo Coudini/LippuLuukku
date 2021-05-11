@@ -6,20 +6,6 @@
     android:id="@+id/layout"
     android:background="@drawable/gradient_list">
 
-    <Button
-        android:id="@+id/buttonSecond"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="button"/>
-    <TextView
-        android:id="@+id/exrasText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Loading"/>
-    <TextView
-        android:id="@+id/locationText"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:text="Loading"/>
+
 
 </LinearLayout>
