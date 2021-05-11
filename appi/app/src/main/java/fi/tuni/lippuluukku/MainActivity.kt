@@ -1,14 +1,22 @@
 package fi.tuni.lippuluukku
 
+import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.AnimationDrawable
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
@@ -16,98 +24,40 @@ import java.net.URL
 import kotlin.concurrent.thread
 import com.fasterxml.jackson.databind.ObjectMapper
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), LocationListener {
 
-    //lateinit var text : TextView
-    lateinit var location : TextView
-    lateinit var keyword : TextView
+    lateinit var locationManager : LocationManager
+    val locationPermissionCode = 2
 
-    /* test-buttons
-    lateinit var button1 : Button
-    lateinit var button2 : Button
-    lateinit var button3 : Button
-    lateinit var button4 : Button
-    lateinit var button5 : Button
-
-     */
     lateinit var preferencesButton : ImageButton
     lateinit var searchButton : ImageButton
 
     lateinit var locationSpinner : Spinner
     lateinit var keywordSpinner : Spinner
 
-//    lateinit var keyWordText : EditText
-//    lateinit var cityText : EditText
 
-    var apikey : String = "wl5A0tEYNyQIQ9cTVA9VGVWlB3R8NgfO"
-    var band = "metallica"
-    var city = "tampere"
-    var radius = 30
+
     var lat = 61.49911
     var lon = 23.78712
     var latlonString : String = "${lat},${lon}"
 
+    var util = Util()
+
     var locationsArray : Array<String> = arrayOf("Current location", "No location", "Tampere")
     var keywordsArray : Array<String> = arrayOf("Nothing", "Metallica")
 
-    //request with keyword and city
-    var url1 : String = "https://app.ticketmaster.com/discovery/v2/events?apikey=${apikey}&keyword=${band}&locale=*&city=${city}"
 
-    //request with keyword
-    var url2 : String = "https://app.ticketmaster.com/discovery/v2/events?apikey=${apikey}&keyword=${band}&locale=*"
-
-    // request with city
-    var url3 : String = "https://app.ticketmaster.com/discovery/v2/events?apikey=${apikey}&locale=*&city=${city}"
-
-    //request with geopoint(lat,lon) and search radius
-    var url4 : String = "https://app.ticketmaster.com/discovery/v2/events?apikey=${apikey}&radius=${radius}&locale=*&geoPoint=${latlonString}"
-
-    //request with keyword, geopoint(lat,lon) and search radius
-    var url5 :String = "https://app.ticketmaster.com/discovery/v2/events?apikey=${apikey}&keyword=${band}&radius=${radius}&locale=*&geoPoint=${latlonString}"
-
+    override fun onLocationChanged(location: Location) {
+        lat = location.latitude
+        lon = location.longitude
+        latlonString = "${lat}${lon}"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val linearLayout : LinearLayout = findViewById(R.id.layout)
-        val animationDrawable : AnimationDrawable = linearLayout.getBackground() as AnimationDrawable
-        animationDrawable.setEnterFadeDuration(2000)
-        animationDrawable.setExitFadeDuration(4000)
-        animationDrawable.start()
-
-        /*
-        ConstraintLayout constraintLayout = findViewById(R.id.layout);
-        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
-        animationDrawable.setEnterFadeDuration(2000);
-        animationDrawable.setExitFadeDuration(4000);
-        animationDrawable.start();
-        *
-        */
-
-
-        //this.text = findViewById(R.id.text)
-        /* Test-buttons
-        this.button1 = findViewById(R.id.button1)
-        this.button1.setOnClickListener(){
-            this.buttonFunc(this.button1, url1)
-        }
-        this.button2 = findViewById(R.id.button2)
-        this.button2.setOnClickListener(){
-            this.buttonFunc(this.button2, url2)
-        }
-        this.button3 = findViewById(R.id.button3)
-        this.button3.setOnClickListener(){
-            this.buttonFunc(this.button3, url3)
-        }
-        this.button4 = findViewById(R.id.button4)
-        this.button4.setOnClickListener(){
-            this.buttonFunc(this.button4, url4)
-        }
-        this.button5 = findViewById(R.id.button5)
-        this.button5.setOnClickListener(){
-            this.buttonFunc(this.button5, url5)
-        }
-         */
+        getLocation()
+        animateBackground()
 
         this.preferencesButton = findViewById(R.id.imageButtonPreferences)
         this.preferencesButton.setOnClickListener(){
@@ -133,6 +83,22 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun getLocation () {
+        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCode)
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 50000, 50f, this)
+    }
+
+    fun animateBackground(){
+        val linearLayout : LinearLayout = findViewById(R.id.layout)
+        val animationDrawable : AnimationDrawable = linearLayout.getBackground() as AnimationDrawable
+        animationDrawable.setEnterFadeDuration(2000)
+        animationDrawable.setExitFadeDuration(4000)
+        animationDrawable.start()
+    }
+
     fun preferencesOnClick(button:View){
         val preferencesIntent = Intent(this, PreferencesActivity::class.java)
         preferencesIntent.putExtra("locationsArray",this.locationsArray)
@@ -142,7 +108,7 @@ class MainActivity : AppCompatActivity() {
 
     fun searchOnClick(button:View) {
         val resultsIntent = Intent(this, ResultsActivity::class.java)
-        resultsIntent.putExtra("searchUrl", this.url1)
+        //resultsIntent.putExtra("searchUrl", this.url1)
         startActivity(resultsIntent)
     }
 
@@ -159,48 +125,7 @@ class MainActivity : AppCompatActivity() {
                 if (tempKeywords != null) {
                     this.keywordsArray = tempKeywords
                 }
-            //val temp = data?.extras?.getString("second")
-                //this.text.text=temp
             }
         }
-    }
-
-    fun buttonFunc(button : View, url: String){
-        downloadUrlAsync(this, url){
-            //var resultti : String? = it
-            //val mp = ObjectMapper()
-            //val myObject: StarWarsJsonObject = mp.readValue(it, StarWarsJsonObject::class.java)
-            //val persons: MutableList<Person>? = myObject.results
-            //persons?.sortByDescending { it.getBmi(it.mass,it.height) }
-            //adapter = ArrayAdapter<Person>(this,R.layout.item,R.id.myTextView,persons!!)
-            //myListView.setAdapter(adapter)
-            //recyclerView.adapter = CustomAdapter(persons!!)
-
-            //val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://...."))
-            //val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=jotain"))
-
-            Log.d("shit", it.toString())
-            //this.text.text = it.toString()
-        }
-    }
-
-    fun downloadUrlAsync(context: Activity, url:String, callback:(result:String?)->Unit):Unit{
-        thread{
-            var data = getUrl(url)
-            context.runOnUiThread{
-                callback(data)
-            }
-        }
-    }
-    fun getUrl(url : String?) : String {
-        val myUrl = URL(url)
-        val conn = myUrl.openConnection() as HttpURLConnection
-        var result = ""
-        val inputstream = conn.getInputStream()
-        inputstream.use{
-            val reader = BufferedReader(InputStreamReader(inputstream))
-            result += reader.readLine()
-        }
-        return result
     }
 }
