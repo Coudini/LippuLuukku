@@ -13,6 +13,7 @@ import android.location.LocationListener
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -37,6 +38,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
     lateinit var locationSpinner : Spinner
     lateinit var keywordSpinner : Spinner
 
+    lateinit var editKeyword : EditText
+    lateinit var editLocation : EditText
     lateinit var locationSelected : String
     lateinit var keywordSelected : String
 
@@ -80,6 +83,9 @@ class MainActivity : AppCompatActivity(), LocationListener {
         getLocation()
         animateBackground()
 
+        this.editKeyword = findViewById(R.id.editKeyword)
+        this.editLocation = findViewById(R.id.editLocation)
+
         //Test strings
         this.gpsTest = findViewById(R.id.gpsTest)
         this.locationTest = findViewById(R.id.locationTest)
@@ -116,6 +122,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     Log.d("test","item selected: ${locationsArray[position]}")
                     locationSelected = locationsArray[position]
+                    editLocation.setText(locationsArray[position])
 
                     //test
                     locationTest.text = locationSelected
@@ -136,7 +143,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     Log.d("test","item selected: ${keywordsArray[position]}")
                     keywordSelected = keywordsArray[position]
-
+                    editKeyword.setText(keywordsArray[position])
                     //test
                     keywordTest.text = keywordSelected
                 }
