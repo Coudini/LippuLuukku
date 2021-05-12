@@ -40,26 +40,62 @@ class MainActivity : AppCompatActivity(), LocationListener {
     lateinit var locationSelected : String
     lateinit var keywordSelected : String
 
-    var lat = 61.49911
-    var lon = 23.78712
+    var lat = 0.0
+    var lon = 0.0
     var latlonString : String = "${lat},${lon}"
 
     var util = Util()
 
-    var locationsArray : Array<String> = arrayOf("Current location", "No location", "Tampere")
+    var locationsArray : Array<String> = arrayOf("Current location", "Anywhere", "Tampere")
     var keywordsArray : Array<String> = arrayOf("Anything", "Metallica")
+
+    //Test-strings
+    lateinit var gpsTest : TextView
+    lateinit var locationTest : TextView
+    lateinit var keywordTest : TextView
+    lateinit var urlTest : TextView
 
 
     override fun onLocationChanged(location: Location) {
         lat = location.latitude
         lon = location.longitude
-        latlonString = "${lat}${lon}"
+        latlonString = "${lat},${lon}"
+
+        //test
+        gpsTest.text = latlonString
+    }
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (requestCode == locationPermissionCode) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         getLocation()
         animateBackground()
+
+        //Test strings
+        this.gpsTest = findViewById(R.id.gpsTest)
+        this.locationTest = findViewById(R.id.locationTest)
+        this.keywordTest = findViewById(R.id.keywordTest)
+        this.urlTest = findViewById(R.id.urlTest)
+
+/*
+        Log.d("test", "getLocation()")
+        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCode)
+        } else {Log.d("test","fail")}
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5f, this)
+*/
+
+
 
         this.preferencesButton = findViewById(R.id.imageButtonPreferences)
         this.preferencesButton.setOnClickListener(){
@@ -80,6 +116,9 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     Log.d("test","item selected: ${locationsArray[position]}")
                     locationSelected = locationsArray[position]
+
+                    //test
+                    locationTest.text = locationSelected
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -97,6 +136,9 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     Log.d("test","item selected: ${keywordsArray[position]}")
                     keywordSelected = keywordsArray[position]
+
+                    //test
+                    keywordTest.text = keywordSelected
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -107,12 +149,13 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
     }
 
-    private fun getLocation () {
+    fun getLocation () {
+        Log.d("test", "getLocation()")
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCode)
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 50000, 50f, this)
+        } else {Log.d("test","fail")}
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5f, this)
     }
 
     private fun animateBackground(){
@@ -135,7 +178,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
         //resultsIntent.putExtra("searchUrl", this.url1)
         var invalidParameters = false
         var tempUrl = ""
-        if (this.locationSelected != "Current location" && this.locationSelected != "No location") {
+        if (this.locationSelected != "Current location" && this.locationSelected != "Anywhere") {
             if (this.keywordSelected != "Anything") {
 
             } else {
@@ -147,7 +190,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
             } else {
 
             }
-        } else if (this.locationSelected == "No location") {
+        } else if (this.locationSelected == "Anywhere") {
             if (this.keywordSelected != "Anything") {
 
             } else {
@@ -159,6 +202,9 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 toast.show()
             }
         }
+
+        //test
+        this.urlTest.text = tempUrl
         if (!invalidParameters) {
             resultsIntent.putExtra("url", tempUrl)
             startActivity(resultsIntent)
