@@ -73,12 +73,32 @@ class MainActivity : AppCompatActivity(), LocationListener {
         if (this.locationSpinner != null) {
             val adapter = ArrayAdapter(this,android.R.layout.simple_spinner_item,this.locationsArray)
             this.locationSpinner.adapter = adapter
+            object :
+                    AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    Log.d("test","item selected: ${locationsArray[position]}")
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    Log.d("test","nothing selected")
+                }
+            }.also { this.locationSpinner.onItemSelectedListener = it }
         }
 
         this.keywordSpinner = findViewById(R.id.keywordSpinner)
         if (this.keywordSpinner != null) {
             val adapter = ArrayAdapter(this,android.R.layout.simple_spinner_item,this.keywordsArray)
             this.keywordSpinner.adapter = adapter
+            object :
+                    AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    Log.d("test","item selected: ${keywordsArray[position]}")
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    Log.d("test","nothing selected")
+                }
+            }.also { this.keywordSpinner.onItemSelectedListener = it }
         }
 
     }
