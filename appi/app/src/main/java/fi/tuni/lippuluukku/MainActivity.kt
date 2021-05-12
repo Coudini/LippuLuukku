@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
     var util = Util()
 
-    var locationsArray : Array<String> = arrayOf("Current location", "Anywhere", "Tampere")
+    var locationsArray : Array<String> = arrayOf("Here", "Anywhere", "Tampere")
     var keywordsArray : Array<String> = arrayOf("Anything", "Metallica")
 
     //Test-strings
@@ -115,12 +115,18 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
         this.locationSpinner = findViewById(R.id.locationSpinner)
         if (this.locationSpinner != null) {
+            val adapter2 = ArrayAdapter<String>(this,R.layout.ghost_text,this.locationsArray)
             val adapter = ArrayAdapter(this,android.R.layout.simple_spinner_item,this.locationsArray)
+            this.locationSpinner.dropDownVerticalOffset = 75
             this.locationSpinner.adapter = adapter
+
             object :
+
                     AdapterView.OnItemSelectedListener {
+
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     Log.d("test","item selected: ${locationsArray[position]}")
+
                     locationSelected = locationsArray[position]
                     editLocation.setText(locationsArray[position])
 
@@ -130,6 +136,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                     Log.d("test","nothing selected")
+
                 }
             }.also { this.locationSpinner.onItemSelectedListener = it }
         }
@@ -137,6 +144,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
         this.keywordSpinner = findViewById(R.id.keywordSpinner)
         if (this.keywordSpinner != null) {
             val adapter = ArrayAdapter(this,android.R.layout.simple_spinner_item,this.keywordsArray)
+            this.keywordSpinner.dropDownVerticalOffset = 75
             this.keywordSpinner.adapter = adapter
             object :
                     AdapterView.OnItemSelectedListener {
@@ -185,24 +193,25 @@ class MainActivity : AppCompatActivity(), LocationListener {
         //resultsIntent.putExtra("searchUrl", this.url1)
         var invalidParameters = false
         var tempUrl = ""
-        if (this.locationSelected != "Current location" && this.locationSelected != "Anywhere") {
+        // Dont use gps
+        if (this.locationSelected != "Here" && this.locationSelected != "Anywhere") {
             if (this.keywordSelected != "Anything") {
-
+                tempUrl = util.getUrl(locationSelected,keywordSelected)
             } else {
-
+                tempUrl = util.getUrl(locationSelected,null)
             }
-        } else if (this.locationSelected == "Current location") {
+            // Use gps
+        } else if (this.locationSelected == "Here") {
             if (this.keywordSelected != "Anything") {
-
+                tempUrl = util.getUrlWithGps(latlonString,keywordSelected)
             } else {
-
+                tempUrl = util.getUrlWithGps(latlonString,null)
             }
         } else if (this.locationSelected == "Anywhere") {
             if (this.keywordSelected != "Anything") {
-
+                tempUrl = util.getUrl(null,keywordSelected)
             } else {
                 invalidParameters = true
-
                 val toast = Toast.makeText(getApplicationContext(),
                         "No search parameters",
                         Toast.LENGTH_SHORT)

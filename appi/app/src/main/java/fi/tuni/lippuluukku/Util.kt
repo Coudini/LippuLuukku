@@ -17,31 +17,23 @@ import androidx.core.content.ContextCompat.getSystemService
 class Util {
 
     val apiKey = "wl5A0tEYNyQIQ9cTVA9VGVWlB3R8NgfO"
+    val radius = 30
 
-    fun getUrlWithGps(location: String, keyWord: String?):String?{
-        return null
+    fun getUrlWithGps(location: String, keyWord: String?):String{
+        if (keyWord != null) {
+            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&keyword=${keyWord}&radius=${radius}&locale=*&geoPoint=${location}"
+        } else {
+            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&radius=${radius}&locale=*&geoPoint=${location}"
+        }
     }
 
-    fun getUrl(location: String?, keyWord: String?):String?{
-
-        if(location!=null && keyWord != null) {
-            if(location=="Current location") {
-                return null
-            } else {
-                return null
-            }
-            return null
-        } else if (location != null && keyWord == null) {
-            if(location=="Current location") {
-                return null
-            } else {
-                return null
-            }
-            return null
+    fun getUrl(location: String?, keyWord: String?):String{
+        if (location != null && keyWord == null) {
+            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&locale=*&city=${location}"
         } else if (location == null && keyWord != null) {
-            return null
+            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&keyword=${keyWord}&locale=*"
         } else {
-            return null
+            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&keyword=${keyWord}&locale=*&city=${location}"
         }
     }
 
