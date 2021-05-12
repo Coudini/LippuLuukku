@@ -38,44 +38,7 @@ class Util {
     }
 
     /*
-    fun buttonFunc(button : View, url: String){
-        downloadUrlAsync(this, url){
-            //var resultti : String? = it
-            //val mp = ObjectMapper()
-            //val myObject: StarWarsJsonObject = mp.readValue(it, StarWarsJsonObject::class.java)
-            //val persons: MutableList<Person>? = myObject.results
-            //persons?.sortByDescending { it.getBmi(it.mass,it.height) }
-            //adapter = ArrayAdapter<Person>(this,R.layout.item,R.id.myTextView,persons!!)
-            //myListView.setAdapter(adapter)
-            //recyclerView.adapter = CustomAdapter(persons!!)
 
-            //val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://...."))
-            //val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=jotain"))
-
-            Log.d("shit", it.toString())
-            //this.text.text = it.toString()
-        }
-    }
-
-    fun downloadUrlAsync(context: Activity, url:String, callback:(result:String?)->Unit):Unit{
-        thread{
-            var data = getUrl(url)
-            context.runOnUiThread{
-                callback(data)
-            }
-        }
-    }
-    fun getUrl(url : String?) : String {
-        val myUrl = URL(url)
-        val conn = myUrl.openConnection() as HttpURLConnection
-        var result = ""
-        val inputstream = conn.getInputStream()
-        inputstream.use{
-            val reader = BufferedReader(InputStreamReader(inputstream))
-            result += reader.readLine()
-        }
-        return result
-    }
 
 
     var apikey : String = "wl5A0tEYNyQIQ9cTVA9VGVWlB3R8NgfO"

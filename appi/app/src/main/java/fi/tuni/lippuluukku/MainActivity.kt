@@ -14,6 +14,7 @@ import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -84,7 +85,36 @@ class MainActivity : AppCompatActivity(), LocationListener {
         animateBackground()
 
         this.editKeyword = findViewById(R.id.editKeyword)
+        this.editKeyword.addTextChangedListener(object : TextWatcher {
+
+            override fun afterTextChanged(s: Editable) {}
+
+            override fun beforeTextChanged(s: CharSequence, start: Int,
+                                           count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int,
+                                       before: Int, count: Int) {
+                //s
+                keywordSelected = s.toString()
+                //test
+                keywordTest.text = s.toString()
+            }
+        })
         this.editLocation = findViewById(R.id.editLocation)
+        this.editLocation.addTextChangedListener(object : TextWatcher {
+
+            override fun afterTextChanged(s: Editable) {}
+
+            override fun beforeTextChanged(s: CharSequence, start: Int,
+                                           count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int,
+                                       before: Int, count: Int) {
+                locationSelected = s.toString()
+            }
+        })
 
         //Test strings
         this.gpsTest = findViewById(R.id.gpsTest)
@@ -223,6 +253,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
         this.urlTest.text = tempUrl
         if (!invalidParameters) {
             resultsIntent.putExtra("url", tempUrl)
+            Log.d("test", tempUrl)
             startActivity(resultsIntent)
         }
     }
