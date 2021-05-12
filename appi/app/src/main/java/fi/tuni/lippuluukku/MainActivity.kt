@@ -5,7 +5,9 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
+import android.graphics.drawable.ColorDrawable
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -35,7 +37,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
     lateinit var locationSpinner : Spinner
     lateinit var keywordSpinner : Spinner
 
-
+    lateinit var locationSelected : String
+    lateinit var keywordSelected : String
 
     var lat = 61.49911
     var lon = 23.78712
@@ -44,7 +47,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
     var util = Util()
 
     var locationsArray : Array<String> = arrayOf("Current location", "No location", "Tampere")
-    var keywordsArray : Array<String> = arrayOf("Nothing", "Metallica")
+    var keywordsArray : Array<String> = arrayOf("Anything", "Metallica")
 
 
     override fun onLocationChanged(location: Location) {
@@ -55,7 +58,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         getLocation()
         animateBackground()
 
@@ -77,6 +79,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
                     AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     Log.d("test","item selected: ${locationsArray[position]}")
+                    locationSelected = locationsArray[position]
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -93,6 +96,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
                     AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     Log.d("test","item selected: ${keywordsArray[position]}")
+                    keywordSelected = keywordsArray[position]
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -129,7 +133,36 @@ class MainActivity : AppCompatActivity(), LocationListener {
     private fun searchOnClick(button:View) {
         val resultsIntent = Intent(this, ResultsActivity::class.java)
         //resultsIntent.putExtra("searchUrl", this.url1)
-        startActivity(resultsIntent)
+        var invalidParameters = false
+        var tempUrl = ""
+        if (this.locationSelected != "Current location" && this.locationSelected != "No location") {
+            if (this.keywordSelected != "Anything") {
+
+            } else {
+
+            }
+        } else if (this.locationSelected == "Current location") {
+            if (this.keywordSelected != "Anything") {
+
+            } else {
+
+            }
+        } else if (this.locationSelected == "No location") {
+            if (this.keywordSelected != "Anything") {
+
+            } else {
+                invalidParameters = true
+
+                val toast = Toast.makeText(getApplicationContext(),
+                        "No search parameters",
+                        Toast.LENGTH_SHORT)
+                toast.show()
+            }
+        }
+        if (!invalidParameters) {
+            resultsIntent.putExtra("url", tempUrl)
+            startActivity(resultsIntent)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
