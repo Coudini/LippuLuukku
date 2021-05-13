@@ -1,24 +1,19 @@
 package fi.tuni.lippuluukku
 
-/*
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
-
-//@JsonIgnoreProperties(ignoreUnknown = true)
-import kotlinx.serialization.*
-import kotlinx.serialization.json.*
-
-@Serializable
-data class ResponseDataGps(
+/*
+@JsonIgnoreProperties(ignoreUnknown = true)
+data class ResponseDataGps2(
         val _embedded: Embedded
 )
 
-@Serializable
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Embedded(
         val events: List<Event>
 )
 
-@Serializable
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Event(
         val _embedded: EmbeddedX,
         val classifications: List<Classification>,
@@ -36,12 +31,12 @@ data class Event(
         val url: String
 )
 
-@Serializable
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class EmbeddedX(
         val venues: List<Venue>
 )
 
-@Serializable
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Classification(
         val family: Boolean,
         val genre: Genre,
@@ -50,12 +45,12 @@ data class Classification(
         val subGenre: SubGenre
 )
 
-@Serializable
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Dates(
         val start: Start
 )
 
-@Serializable
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Image(
         val fallback: Boolean,
         val height: Int,
@@ -64,7 +59,7 @@ data class Image(
         val width: Int
 )
 
-@Serializable
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class PriceRange(
         val currency: String,
         val max: Double,
@@ -72,12 +67,12 @@ data class PriceRange(
         val type: String
 )
 
-@Serializable
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Sales(
         val `public`: Public
 )
 
-@Serializable
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Venue(
         val _links: Links,
         val address: Address,
@@ -97,73 +92,74 @@ data class Venue(
         val url: String
 )
 
-@Serializable
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Links(
         val self: Self
 )
 
-@Serializable
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Address(
         val line1: String
 )
 
-@Serializable
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class City(
         val name: String
 )
 
-@Serializable
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Country(
         val countryCode: String,
         val name: String
 )
 
-@Serializable
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Location(
         val latitude: String,
         val longitude: String
 )
 
-@Serializable
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class UpcomingEvents(
         val _total: Int
 )
 
-@Serializable
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Self(
         val href: String
 )
 
-@Serializable
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Genre(
         val id: String,
         val name: String
 )
 
-@Serializable
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Segment(
         val id: String,
         val name: String
 )
 
-@Serializable
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class SubGenre(
         val id: String,
         val name: String
 )
 
-@Serializable
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Start(
         val dateTime: String,
         val localDate: String,
         val localTime: String
 )
 
-@Serializable
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Public(
         val endDateTime: String,
         val startDateTime: String,
         val startTBA: Boolean,
         val startTBD: Boolean
 )
-*/
+
+ */

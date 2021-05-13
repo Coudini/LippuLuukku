@@ -21,19 +21,19 @@ class Util {
 
     fun getUrlWithGps(location: String, keyWord: String?):String{
         if (keyWord != null) {
-            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&keyword=${keyWord}&radius=${radius}&locale=*&geoPoint=${location}"
+            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&keyword=${keyWord}&radius=${radius}&geoPoint=${location}&size=50&page=0"
         } else {
-            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&radius=${radius}&locale=*&geoPoint=${location}"
+            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&radius=${radius}&geoPoint=${location}&size=50&page=0"
         }
     }
 
     fun getUrl(location: String?, keyWord: String?):String{
         if (location != null && keyWord == null) {
-            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&locale=*&city=${location}"
+            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&size=50&page=0&city=${location}"
         } else if (location == null && keyWord != null) {
-            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&keyword=${keyWord}&locale=*"
+            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&keyword=${keyWord}&size=50&page=0"
         } else {
-            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&keyword=${keyWord}&locale=*&city=${location}"
+            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&keyword=${keyWord}&size=50&page=0&city=${location}"
         }
     }
 
