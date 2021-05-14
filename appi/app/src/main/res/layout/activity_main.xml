@@ -9,6 +9,14 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="LIPPULUUKKU"
+        android:fontFamily="@font/champion"
+        android:textSize="50dp"
+        android:gravity="center"/>
+
     <!--
     <ScrollView
         android:layout_width="wrap_content"
@@ -67,7 +75,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="100dp">
+        android:layout_marginTop="100dp"
+        android:background="#26000000">
 
 
 
@@ -114,7 +123,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="#26000000">
 
         <Space
             android:layout_width="1dp"
@@ -195,7 +205,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="20dp">
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:background="#26000000">
 
         <ImageButton
             android:id="@+id/imageButtonPreferences"

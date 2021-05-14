@@ -1,6 +1,7 @@
 package fi.tuni.lippuluukku
 
 import android.app.Activity
+import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.util.Log
@@ -33,6 +34,7 @@ class ResultsActivity : AppCompatActivity() {
     lateinit var recyclerView : RecyclerView
     lateinit var linearLayoutManager : LinearLayoutManager
 
+    var extras : Bundle? = null
 
     var res: MutableList<ResponseData>? = null
 
@@ -50,15 +52,25 @@ class ResultsActivity : AppCompatActivity() {
         }
         this.dataTest =  findViewById(R.id.dataTest)
 
-        val extras = intent.extras
+        extras = intent.extras
         if(extras != null) {
-            urlFunc(extras.getString("url").toString())
+            urlFunc(extras!!.getString("url").toString())
         }
 
         linearLayoutManager = LinearLayoutManager(this)
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = linearLayoutManager
     }
+
+    override fun onResume() {
+        super.onResume()
+        // change to its own class to hold images? functions etc..
+        var data : String?
+        thread {
+
+        }
+    }
+
     fun animateBackground(){
         val linearLayout : LinearLayout = findViewById(R.id.layout)
         val animationDrawable : AnimationDrawable = linearLayout.getBackground() as AnimationDrawable

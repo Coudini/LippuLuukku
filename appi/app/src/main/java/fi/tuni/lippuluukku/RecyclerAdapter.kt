@@ -1,4 +1,5 @@
 package fi.tuni.lippuluukku
 
-class RecyclerAdapter {
+class RecyclerAdapter(val dataSet: List<String>) {
+
 }

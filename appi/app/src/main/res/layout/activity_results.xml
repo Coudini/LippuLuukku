@@ -20,7 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
-        android:background="#CCFFFFFF"/>
+
+        android:background="#595AE6A9"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
