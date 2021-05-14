@@ -15,6 +15,12 @@
         android:layout_height="wrap_content"
         android:text="loading"
         android:id="@+id/dataTest"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:background="#CCFFFFFF"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">

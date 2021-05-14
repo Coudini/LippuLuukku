@@ -9,26 +9,16 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.util.JSONWrappedObject
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 import kotlin.concurrent.thread
-import kotlinx.serialization.*
 import org.json.JSONObject
 
 import fi.tuni.lippuluukku.model.ResponseData
-import fi.tuni.lippuluukku.model.JsonObject
-import kotlinx.serialization.json.JsonConfiguration
-import org.json.JSONArray
-import org.json.*
-
-import java.io.FileReader
 import com.google.gson.Gson
 
 class ResultsActivity : AppCompatActivity() {
@@ -37,15 +27,17 @@ class ResultsActivity : AppCompatActivity() {
     lateinit var testButton : Button
     lateinit var dataTest : TextView
     lateinit var testi : TextView
-    lateinit var gsonTest: ResponseData
+
+    lateinit var results: ResponseData
+
+    lateinit var recyclerView : RecyclerView
+    lateinit var linearLayoutManager : LinearLayoutManager
+
 
     var res: MutableList<ResponseData>? = null
 
     fun testFunc (button: View) {
-    //this.dataTest.text = res.toString()
-    //this.dataTest.text = res?.first()?._embedded?.events?.first()?.name
-    // this.dataTest.text = res?.first()?.page?.size.toString()
-    this.dataTest.text = "firstName: ${gsonTest.events.first().name}, size: ${gsonTest.events.count()}"
+        this.dataTest.text = "firstName: ${results.events.first().name}, size: ${results.events.count()}"
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,13 +52,12 @@ class ResultsActivity : AppCompatActivity() {
 
         val extras = intent.extras
         if(extras != null) {
-            // no need to make val
-            val url = extras.getString("url")
             urlFunc(extras.getString("url").toString())
-            //urlFunc("https://app.ticketmaster.com/discovery/v2/events?apikey=wl5A0tEYNyQIQ9cTVA9VGVWlB3R8NgfO&locale=*&size=1&page=0&city=Tampere")
-
         }
-        Log.d("test","")
+
+        linearLayoutManager = LinearLayoutManager(this)
+        recyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = linearLayoutManager
     }
     fun animateBackground(){
         val linearLayout : LinearLayout = findViewById(R.id.layout)
@@ -91,9 +82,8 @@ class ResultsActivity : AppCompatActivity() {
             //Log.d("test", "tempArray: ${tempArray.toString()}")
 
             val gson = Gson()
-            this.gsonTest = gson.fromJson(jsonObject.toString(), ResponseData::class.java)
-            Log.d("test", gsonTest.events.first().name)
-
+            this.results = gson.fromJson(jsonObject.toString(), ResponseData::class.java)
+            Log.d("test", results.events.first().name)
         }
     }
 
@@ -105,6 +95,7 @@ class ResultsActivity : AppCompatActivity() {
             }
         }
     }
+
     fun getUrl(url : String?) : String {
         val myUrl = URL(url)
         val conn = myUrl.openConnection() as HttpURLConnection
@@ -116,5 +107,4 @@ class ResultsActivity : AppCompatActivity() {
         }
         return result
     }
-
 }
