@@ -1,16 +1,21 @@
 package fi.tuni.lippuluukku
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-
-@JsonIgnoreProperties(ignoreUnknown = true)
+import kotlinx.serialization.Serializable
+/*
+@Serializable
 data class ResponseData(
-    val _embedded: Embedded
+    val _embedded: Embedded?,
+    val _links : Links,
+    val page: Page
 )
-@JsonIgnoreProperties(ignoreUnknown = true)
+
+@Serializable
 data class Embedded(
     val events: List<Event>
 )
-@JsonIgnoreProperties(ignoreUnknown = true)
+
+@Serializable
 data class Event(
     val _embedded: EmbeddedX,
     val classifications: List<Classification>,
@@ -20,20 +25,24 @@ data class Event(
     val priceRanges: List<PriceRange>,
     val url: String
 )
-@JsonIgnoreProperties(ignoreUnknown = true)
+
+@Serializable
 data class EmbeddedX(
     val venues: List<Venue>
 )
-@JsonIgnoreProperties(ignoreUnknown = true)
+
+@Serializable
 data class Classification(
     val primary: Boolean,
     val segment: Segment
 )
-@JsonIgnoreProperties(ignoreUnknown = true)
+
+@Serializable
 data class Dates(
     val start: Start
 )
-@JsonIgnoreProperties(ignoreUnknown = true)
+
+@Serializable
 data class Image(
     val fallback: Boolean,
     val height: Int,
@@ -41,36 +50,43 @@ data class Image(
     val url: String,
     val width: Int
 )
-@JsonIgnoreProperties(ignoreUnknown = true)
+
+@Serializable
 data class PriceRange(
     val currency: String,
     val max: Double,
     val min: Double,
     val type: String
 )
-@JsonIgnoreProperties(ignoreUnknown = true)
+
+@Serializable
 data class Venue(
     val city: City,
     val location: Location,
     val name: String
 )
-@JsonIgnoreProperties(ignoreUnknown = true)
+
+@Serializable
 data class City(
     val name: String
 )
-@JsonIgnoreProperties(ignoreUnknown = true)
+
+@Serializable
 data class Location(
     val latitude: String,
     val longitude: String
 )
-@JsonIgnoreProperties(ignoreUnknown = true)
+
+@Serializable
 data class Segment(
     val id: String,
     val name: String
 )
-@JsonIgnoreProperties(ignoreUnknown = true)
+
+@Serializable
 data class Start(
     val dateTime: String,
     val localDate: String,
     val localTime: String
 )
+*/

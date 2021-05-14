@@ -1,4 +1,4 @@
-package fi.tuni.lippuluukku
+package fi.tuni.lippuluukku.model
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
@@ -8,9 +8,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
-/*
-@Serializable
-data class MyJsonObject(var results: MutableList<ResponseData>? = null)
 
+//@Serializable
+//@JsonIgnoreProperties(ignoreUnknown = true)
 
-*/
+//@Serializable
+data class JsonObject(var results: List<ResponseData>)

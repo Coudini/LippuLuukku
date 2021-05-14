@@ -4,10 +4,14 @@ import android.app.Activity
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.util.JSONWrappedObject
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import java.io.BufferedReader
@@ -15,14 +19,45 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 import kotlin.concurrent.thread
+import kotlinx.serialization.*
+import org.json.JSONObject
+
+import fi.tuni.lippuluukku.model.ResponseData
+import fi.tuni.lippuluukku.model.JsonObject
+import kotlinx.serialization.json.JsonConfiguration
+import org.json.JSONArray
+import org.json.*
+
+import java.io.FileReader
+import com.google.gson.Gson
 
 class ResultsActivity : AppCompatActivity() {
+
+    //test button
+    lateinit var testButton : Button
+    lateinit var dataTest : TextView
     lateinit var testi : TextView
+    lateinit var gsonTest: ResponseData
+
+    var res: MutableList<ResponseData>? = null
+
+    fun testFunc (button: View) {
+    //this.dataTest.text = res.toString()
+    //this.dataTest.text = res?.first()?._embedded?.events?.first()?.name
+    // this.dataTest.text = res?.first()?.page?.size.toString()
+    this.dataTest.text = "firstName: ${gsonTest.events.first().name}, size: ${gsonTest.events.count()}"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_results)
         animateBackground()
         this.testi = findViewById(R.id.testi)
+        this.testButton = findViewById(R.id.dataButton)
+        this.testButton.setOnClickListener(){
+            this.testFunc(this.testButton)
+        }
+        this.dataTest =  findViewById(R.id.dataTest)
+
         val extras = intent.extras
         if(extras != null) {
             // no need to make val
@@ -43,38 +78,22 @@ class ResultsActivity : AppCompatActivity() {
 
     fun urlFunc(url: String){
         downloadUrlAsync(this, url){
-            //val mp = ObjectMapper()
-            //val myObject: StarWarsJsonObject = mp.readValue(it, StarWarsJsonObject::class.java)
-            //val persons: MutableList<Person>? = myObject.results
-            //persons?.sortByDescending { it.getBmi(it.mass,it.height) }
-            //adapter = ArrayAdapter<Person>(this,R.layout.item,R.id.myTextView,persons!!)
-            //myListView.setAdapter(adapter)
-            //recyclerView.adapter = CustomAdapter(persons!!)
 
-            //val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://...."))
-            //val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=jotain"))
-
-            //
-            //val obj = Json.decodeFromString<MyJsonObject>(it.toString())
-
-
-            Log.d("shit", it.toString())
-            //this.text.text = it.toString()
-            val mp = ObjectMapper()
-            val myObject : MyJsonObject2 = mp.readValue(it, MyJsonObject2::class.java)
-            val resultz : MutableList<ResponseData>? = myObject.results
-            resultz?.forEach { println(it) }
-            Log.d("test", "results: ${myObject.results?.get(0)?._embedded?.events?.get(0)?.name}")
             this.testi.text = it
+            Log.d("test", it.toString())
 
-            /*
-            val mp = ObjectMapper()
-            val myObject : MyJsonObject = mp.readValue(it, MyJsonObject::class.java)
-            val res : MutableList<ResponseDataGps>? = myObject.results
+            var jsonData = JSONObject(it)
+            Log.d("test", "jsonData: ${jsonData.toString()}")
+            //var jsonArray = jsonData.getJSONArray("_embedded")
+            var jsonObject = jsonData.getJSONObject("_embedded")
+            Log.d("test", "jsonObject: ${jsonObject.toString()}")
+            //var tempArray : JSONArray = jsonObject.getJSONArray("events")
+            //Log.d("test", "tempArray: ${tempArray.toString()}")
 
-            Log.d("test", res?.size.toString())
+            val gson = Gson()
+            this.gsonTest = gson.fromJson(jsonObject.toString(), ResponseData::class.java)
+            Log.d("test", gsonTest.events.first().name)
 
-             */
         }
     }
 
