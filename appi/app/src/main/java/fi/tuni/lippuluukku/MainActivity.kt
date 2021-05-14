@@ -150,9 +150,9 @@ class MainActivity : AppCompatActivity(), LocationListener {
             this.locationSpinner.dropDownVerticalOffset = 75
             this.locationSpinner.adapter = adapter
 
-            object :
 
-                    AdapterView.OnItemSelectedListener {
+
+            object : AdapterView.OnItemSelectedListener {
 
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     Log.d("test","item selected: ${locationsArray[position]}")

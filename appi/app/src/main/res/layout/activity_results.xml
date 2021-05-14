@@ -6,6 +6,14 @@
     android:id="@+id/layout"
     android:background="@drawable/gradient_list">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="LIPPULUUKKU"
+        android:fontFamily="@font/champion"
+        android:textSize="50dp"
+        android:gravity="center"/>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,8 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
-
-        android:background="#595AE6A9"/>
+/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">

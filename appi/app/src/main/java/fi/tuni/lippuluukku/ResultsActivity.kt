@@ -29,6 +29,8 @@ class ResultsActivity : AppCompatActivity() {
     lateinit var dataTest : TextView
     lateinit var testi : TextView
 
+    lateinit var url : String
+
     lateinit var results: ResponseData
 
     lateinit var recyclerView : RecyclerView
@@ -54,7 +56,8 @@ class ResultsActivity : AppCompatActivity() {
 
         extras = intent.extras
         if(extras != null) {
-            urlFunc(extras!!.getString("url").toString())
+            url = extras!!.getString("url").toString()
+        //urlFunc(extras!!.getString("url").toString())
         }
 
         linearLayoutManager = LinearLayoutManager(this)
@@ -65,9 +68,11 @@ class ResultsActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         // change to its own class to hold images? functions etc..
-        var data : String?
-        thread {
+        //var data : String?
 
+        thread {
+            urlFunc(url)
+            recyclerView.adapter = RecyclerAdapter(this.results.events)
         }
     }
 
