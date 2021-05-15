@@ -2,12 +2,8 @@ package fi.tuni.lippuluukku.model
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
-//@JsonIgnoreProperties(ignoreUnknown = true)
 
-
-import kotlinx.serialization.*
-import kotlinx.serialization.json.*
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class ResponseData(
-        val events: MutableList<Event>,
+        val events: MutableList<Event>? = null,
 )

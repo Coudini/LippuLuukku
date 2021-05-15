@@ -21,7 +21,7 @@ class Util {
 
     fun getUrlWithGps(location: String, keyWord: String?):String{
         if (keyWord != null) {
-            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&keyword=${keyWord}&radius=${radius}&geoPoint=${location}"//&size=50&page=0"
+            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&keyword=${keyWord}&radius=${radius}&geoPoint=${location}&size=50"//&size=50&page=0"
         } else {
             return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&radius=${radius}&geoPoint=${location}"//&size=50&page=0"
         }
@@ -33,7 +33,7 @@ class Util {
         } else if (location == null && keyWord != null) {
             return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&keyword=${keyWord}"
         } else {
-            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&keyword=${keyWord}&city=${location}"
+            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&keyword=${keyWord}&locale=*&page=0&city=${location}"
         }
     }
 

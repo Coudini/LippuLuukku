@@ -10,11 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import fi.tuni.lippuluukku.model.Event
 import android.graphics.*
 import android.util.Log
+import fi.tuni.lippuluukku.model.ResponseData
 
 //import androidx.recyclerview.widget.RecyclerView
 
 
-class RecyclerAdapter(private val dataSet: MutableList<Event>) :
+class RecyclerAdapter(private val dataSet: MutableList<Event>?) :
         RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
 
@@ -43,14 +44,17 @@ class RecyclerAdapter(private val dataSet: MutableList<Event>) :
         Log.d("test", "Event Clicked")
     }
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+        println(dataSet?.size)
+        Log.d("test","dataset size : ${dataSet?.size}")
+        viewHolder.eventName.text = "Name: ${dataSet!![position].name}"
 
-        viewHolder.eventName.text = "Name: ${dataSet[position].name}"
+        //viewHolder.eventName.text = "Name: ${dataSet?.get(position)?.name}"
         //viewHolder.setOnClickListener(eventOnClick())
         viewHolder.itemView.setOnClickListener(){
             eventOnClick()
         }
         //viewHolder.textView2.text = "Bmi: ${dataSet[position].getBmi(dataSet[position].mass, dataSet[position].height).toString()}"
     }
-    override fun getItemCount() = dataSet.size
+    override fun getItemCount() = dataSet!!.size
 
 }

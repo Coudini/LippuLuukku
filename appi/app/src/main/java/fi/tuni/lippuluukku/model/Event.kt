@@ -2,18 +2,13 @@ package fi.tuni.lippuluukku.model
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
-//@JsonIgnoreProperties(ignoreUnknown = true)
 
-
-import kotlinx.serialization.*
-import kotlinx.serialization.json.*
-
-//@Serializable
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Event(
-        val name : String,
-        val url : String,
-        val images : List<EventImage>,
-        val dates : Start,
-        val classifications : List<Classification>,
-        val priceRanges : List<Price>
+        val name : String? = null,
+        val url : String? = null,
+        val images : MutableList<EventImage>? = null,
+        val dates : Start? = null,
+        val classifications : MutableList<Classification>? = null,
+        val priceRanges : MutableList<Price>? = null
 )
