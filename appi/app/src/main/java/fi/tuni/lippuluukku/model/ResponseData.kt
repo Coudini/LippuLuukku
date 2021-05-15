@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 
-//@Serializable
 data class ResponseData(
-        val events: List<Event>,
+        val events: MutableList<Event>,
 )

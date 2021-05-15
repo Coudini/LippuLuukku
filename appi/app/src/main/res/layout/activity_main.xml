@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:text="LIPPULUUKKU"
         android:fontFamily="@font/champion"
-        android:textSize="50dp"
+        android:textSize="60dp"
+        android:textColor="#BF26d4a0"
         android:gravity="center"/>
 
     <!--
