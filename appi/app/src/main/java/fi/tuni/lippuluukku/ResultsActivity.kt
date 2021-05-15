@@ -72,7 +72,7 @@ class ResultsActivity : AppCompatActivity() {
 
         thread {
             urlFunc(url)
-            recyclerView.adapter = RecyclerAdapter(this.results.events)
+            //recyclerView.adapter = RecyclerAdapter(this.results.events)
         }
     }
 
@@ -101,6 +101,7 @@ class ResultsActivity : AppCompatActivity() {
             val gson = Gson()
             this.results = gson.fromJson(jsonObject.toString(), ResponseData::class.java)
             Log.d("test", results.events.first().name)
+            recyclerView.adapter = RecyclerAdapter(this.results.events)
         }
     }
 
@@ -124,4 +125,5 @@ class ResultsActivity : AppCompatActivity() {
         }
         return result
     }
+
 }

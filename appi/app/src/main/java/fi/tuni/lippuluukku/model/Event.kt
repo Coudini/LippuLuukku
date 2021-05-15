@@ -10,5 +10,10 @@ import kotlinx.serialization.json.*
 
 //@Serializable
 data class Event(
-        val name : String
+        val name : String,
+        val url : String,
+        val images : List<EventImage>,
+        val dates : Start,
+        val classifications : List<Classification>,
+        val priceRanges : List<Price>
 )
