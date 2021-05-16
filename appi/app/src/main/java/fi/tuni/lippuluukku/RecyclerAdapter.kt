@@ -64,7 +64,16 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
 
         fun handleImage () {
             thread{
-                val imageStream: InputStream = URL(dataSet!![position].images?.first()?.url).getContent() as InputStream
+                var smallestWidth = dataSet!![position].images!!.first()!!.width
+                var smallestIndex = 0
+                for (i in 0..dataSet!![position].images!!.count() - 1) {
+                    if (dataSet!![position].images!![i].width!! < smallestWidth!!){
+                        smallestWidth = dataSet!![position].images!![i].width!!
+                        smallestIndex = i
+                    }
+                }
+
+                val imageStream: InputStream = URL(dataSet!![position].images?.get(smallestIndex)?.url).getContent() as InputStream
                 val mirage = BitmapFactory.decodeStream(imageStream)
                 context.runOnUiThread(Runnable{
                     viewHolder.eventImage.setImageBitmap(mirage)
