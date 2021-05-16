@@ -63,7 +63,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TESTITEKSTI   testttsttsiii  ii   iiii dsf da sdf fad     dfda dippadaapa   ds      dddsddsdsddd d  d"
+                android:text="TESTITEKSTI   testttsttsiii  ii   iiii dsf da sdf fad     dfda dippadaapa   ds      dddsddsdsddd d  d tonnnnnnni"
                 android:layout_weight="2"
                 android:ellipsize="end"/>
 

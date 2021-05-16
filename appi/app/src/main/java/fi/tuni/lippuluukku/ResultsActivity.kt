@@ -23,6 +23,7 @@ import org.json.JSONObject
 
 import fi.tuni.lippuluukku.model.ResponseData
 import com.google.gson.Gson
+import fi.tuni.lippuluukku.model.ResponseDataHolder
 import java.io.InputStream
 
 class ResultsActivity : AppCompatActivity() {
@@ -34,7 +35,7 @@ class ResultsActivity : AppCompatActivity() {
 
     lateinit var url : String
 
-    lateinit var results: ResponseData
+    lateinit var results: ResponseDataHolder
 
     lateinit var recyclerView : RecyclerView
     lateinit var linearLayoutManager : LinearLayoutManager
@@ -44,7 +45,7 @@ class ResultsActivity : AppCompatActivity() {
     //var res: MutableList<ResponseData>? = null
 
     fun testFunc (button: View) {
-        this.dataTest.text = "firstName: ${results.events?.get(2)?.name}, size: ${results.events?.count()}"
+        //this.dataTest.text = "firstName: ${results.events?.get(2)?.name}, size: ${results.events?.count()}"
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +67,11 @@ class ResultsActivity : AppCompatActivity() {
         linearLayoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false)
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = linearLayoutManager
+        thread {
+            urlFunc(url)
+
+            //recyclerView.adapter = RecyclerAdapter(this.results._embedded.events, this)
+        }
     }
 
     override fun onResume() {
@@ -73,11 +79,7 @@ class ResultsActivity : AppCompatActivity() {
         // change to its own class to hold images? functions etc..
         //var data : String?
 
-        thread {
-            urlFunc(url)
 
-            //recyclerView.adapter = RecyclerAdapter(this.results.events)
-        }
     }
 
     fun animateBackground(){
@@ -94,24 +96,31 @@ class ResultsActivity : AppCompatActivity() {
             this.testi.text = it
             Log.d("test", it.toString())
 
-            var jsonData = JSONObject(it)
-            Log.d("test", "jsonData: ${jsonData.toString()}")
+            //var jsonData = JSONObject(it)
+            //Log.d("test", "jsonData: ${jsonData.toString()}")
             //var jsonArray = jsonData.getJSONArray("_embedded")
-            var jsonObject = jsonData.getJSONObject("_embedded")
-            Log.d("test", "jsonObject: ${jsonObject.toString()}")
+            //var jsonObject = jsonData.getJSONObject("_embedded")
+            //var jsonObject2 = jsonObject.getJSONArray("events")
+            //Log.d("test", "jsonObject: ${jsonObject2.toString()}")
             //var tempArray : JSONArray = jsonObject.getJSONArray("events")
             //Log.d("test", "tempArray: ${tempArray.toString()}")
 
-           //val mp = ObjectMapper()
-            //val myObject: ResponseData = mp.readValue(jsonObject.toString(), ResponseData::class.java)
-            //val events: MutableList<fi.tuni.lippuluukku.model.Event>? = myObject.events
-            //recyclerView.adapter = RecyclerAdapter(events!!)
+            val mp = ObjectMapper()
+            val myObject: ResponseDataHolder = mp.readValue(it, ResponseDataHolder::class.java)
+            //val events: MutableList<fi.tuni.lippuluukku.model.Event>? = myObject._embedded?.events
+            recyclerView.recycledViewPool.setMaxRecycledViews(0,100)
+            recyclerView.setItemViewCacheSize(100)
+            recyclerView.adapter = RecyclerAdapter(myObject._embedded?.events, this)
+            //recyclerView.adapter.
 
 
-            val gson = Gson()
-            this.results = gson.fromJson(jsonObject.toString(), ResponseData::class.java)
-            Log.d("test", "${results?.events?.first()?.name?.toString()}")
-            recyclerView.adapter = RecyclerAdapter(this.results?.events, this)
+
+
+
+            //val gson = Gson()
+            //this.results = gson.fromJson(jsonObject.toString(), ResponseData::class.java)
+            //Log.d("test", "gson results events count${results?.events?.count()}")
+            //recyclerView.adapter = RecyclerAdapter(this.results?.events, this)
             //recyclerView.adapter = RecyclerAdapter(this?.results)
 
         }
@@ -127,7 +136,7 @@ class ResultsActivity : AppCompatActivity() {
     fun downloadUrlAsync(context: Activity, url:String, callback:(result:String?)->Unit):Unit{
         thread{
             //var data = getUrl(url)
-            var data = getUrl("https://app.ticketmaster.com/discovery/v2/events?apikey=wl5A0tEYNyQIQ9cTVA9VGVWlB3R8NgfO&locale=*&page=0&city=Tampere")
+            var data = getUrl("https://app.ticketmaster.com/discovery/v2/events?apikey=wl5A0tEYNyQIQ9cTVA9VGVWlB3R8NgfO&locale=*&page=0&city=Tampere&size=100")
             context.runOnUiThread{
                 callback(data)
             }

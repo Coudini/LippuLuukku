@@ -12,11 +12,14 @@ import android.widget.LinearLayout
 import android.widget.LinearLayout.LayoutParams
 import android.widget.LinearLayout.LayoutParams.*
 import android.widget.TextView
+import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView
 import fi.tuni.lippuluukku.model.Event
 import java.io.InputStream
 import java.net.URL
 import kotlin.concurrent.thread
+import androidx.core.view.marginTop
+import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
 
 
 //import androidx.recyclerview.widget.RecyclerView
@@ -45,6 +48,7 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
             //eventDescription = view.findViewById(R.id.event_description)
             eventImage = view.findViewById(R.id.event_image)
             eventPrice = view.findViewById(R.id.event_price)
+
         }
     }
 
@@ -53,6 +57,7 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
                 .inflate(R.layout.event_item, viewGroup, false)
         //view.setBackgroundColor(Color.GREEN)
         view.setBackgroundColor(0x26000000)
+        println("VIEWI GRUUPPI VIDDU :    "+viewGroup)
 
         //val root: View = view.getRootView()
         //root.setBackgroundColor(getResources().getColor(color.white))
@@ -99,23 +104,28 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
         }
         if (!viewHolder.imageSet){
             handleImage()
-            viewHolder.imageSet = true
+            //viewHolder.imageSet = true
         }
         //handleImage()
+
         viewHolder.topLayout.setOnClickListener(){
             eventOnClick(position)
+            //context.
             val params: LayoutParams = viewHolder.bottomLayout.layoutParams as LayoutParams
+            println(position)
             if (viewHolder.showInfo) {
                 viewHolder.bottomLayout.visibility = View.INVISIBLE
-                viewHolder.showInfo = false
+
                 params.height = 0
                 viewHolder.bottomLayout.layoutParams = params
+                viewHolder.showInfo = false
 
             } else {
                 viewHolder.bottomLayout.visibility = View.VISIBLE
-                viewHolder.showInfo = true
-                params.height = MATCH_PARENT
+
+                params.height = WRAP_CONTENT
                 viewHolder.bottomLayout.layoutParams = params
+                viewHolder.showInfo = true
             }
         }
     }
