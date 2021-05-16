@@ -8,6 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.LinearLayout.LayoutParams
+import android.widget.LinearLayout.LayoutParams.*
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import fi.tuni.lippuluukku.model.Event
@@ -24,6 +27,8 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val topLayout : LinearLayout
+        val bottomLayout : LinearLayout
         val eventName: TextView
         val eventType: TextView
         //val eventDescription : TextView
@@ -32,6 +37,8 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
         var showInfo = false
 
         init {
+            topLayout = view.findViewById(R.id.event_top_layout)
+            bottomLayout = view.findViewById(R.id.event_bottom_layout)
             eventName = view.findViewById(R.id.event_name)
             eventType = view.findViewById(R.id.event_type)
             //eventDescription = view.findViewById(R.id.event_description)
@@ -74,7 +81,7 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
 
                 val imageStream: InputStream = URL(dataSet!![position].images?.get(smallestIndex)?.url).getContent() as InputStream
                 val mirage = BitmapFactory.decodeStream(imageStream)
-                context.runOnUiThread(Runnable{
+                context.runOnUiThread(Runnable {
                     viewHolder.eventImage.setImageBitmap(mirage)
                 })
             }
@@ -84,14 +91,21 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
             viewHolder.imageSet = true
         }
         //handleImage()
-        viewHolder.itemView.setOnClickListener(){
+        viewHolder.topLayout.setOnClickListener(){
             eventOnClick(position)
+            val params: LayoutParams = viewHolder.bottomLayout.layoutParams as LayoutParams
             if (viewHolder.showInfo) {
+                viewHolder.bottomLayout.visibility = View.INVISIBLE
+                viewHolder.showInfo = false
+                params.height = 0
+                viewHolder.bottomLayout.layoutParams = params
 
             } else {
-
+                viewHolder.bottomLayout.visibility = View.VISIBLE
+                viewHolder.showInfo = true
+                params.height = MATCH_PARENT
+                viewHolder.bottomLayout.layoutParams = params
             }
-            viewHolder.eventName.text = "Name: ${dataSet!![position].url}"
         }
     }
     fun eventOnClick(index: Int){
