@@ -99,16 +99,16 @@ class ResultsActivity : AppCompatActivity() {
             //var tempArray : JSONArray = jsonObject.getJSONArray("events")
             //Log.d("test", "tempArray: ${tempArray.toString()}")
 
-            val mp = ObjectMapper()
-            val myObject: ResponseData = mp.readValue(jsonObject.toString(), ResponseData::class.java)
-            val events: MutableList<fi.tuni.lippuluukku.model.Event>? = myObject.events
-            recyclerView.adapter = RecyclerAdapter(events!!)
+           //val mp = ObjectMapper()
+            //val myObject: ResponseData = mp.readValue(jsonObject.toString(), ResponseData::class.java)
+            //val events: MutableList<fi.tuni.lippuluukku.model.Event>? = myObject.events
+            //recyclerView.adapter = RecyclerAdapter(events!!)
 
 
             val gson = Gson()
             this.results = gson.fromJson(jsonObject.toString(), ResponseData::class.java)
             Log.d("test", "${results?.events?.first()?.name?.toString()}")
-            //recyclerView.adapter = RecyclerAdapter(this.results?.events)
+            recyclerView.adapter = RecyclerAdapter(this.results?.events)
             //recyclerView.adapter = RecyclerAdapter(this?.results)
         }
     }
@@ -134,5 +134,4 @@ class ResultsActivity : AppCompatActivity() {
         }
         return result
     }
-
 }

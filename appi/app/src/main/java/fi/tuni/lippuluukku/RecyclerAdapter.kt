@@ -40,8 +40,8 @@ class RecyclerAdapter(private val dataSet: MutableList<Event>?) :
     }
 
 
-    fun eventOnClick(){
-        Log.d("test", "Event Clicked")
+    fun eventOnClick(index : Int){
+        Log.d("test", "Event Clicked. url: ${dataSet!![index].url}")
     }
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         println(dataSet?.size)
@@ -51,7 +51,8 @@ class RecyclerAdapter(private val dataSet: MutableList<Event>?) :
         //viewHolder.eventName.text = "Name: ${dataSet?.get(position)?.name}"
         //viewHolder.setOnClickListener(eventOnClick())
         viewHolder.itemView.setOnClickListener(){
-            eventOnClick()
+            eventOnClick(position)
+            viewHolder.eventName.text = "Name: ${dataSet!![position].url}"
         }
         //viewHolder.textView2.text = "Bmi: ${dataSet[position].getBmi(dataSet[position].mass, dataSet[position].height).toString()}"
     }
