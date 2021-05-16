@@ -29,6 +29,7 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
         //val eventDescription : TextView
         var eventImage: ImageView
         var imageSet = false
+        var showInfo = false
 
         init {
             eventName = view.findViewById(R.id.event_name)
@@ -51,9 +52,7 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
     }
 
 
-    fun eventOnClick(index: Int){
-        Log.d("test", "Event Clicked. url: ${dataSet!![index].url}")
-    }
+
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         println(dataSet?.size)
         Log.d("test", "dataset size : ${dataSet?.size}")
@@ -87,8 +86,16 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
         //handleImage()
         viewHolder.itemView.setOnClickListener(){
             eventOnClick(position)
+            if (viewHolder.showInfo) {
+
+            } else {
+
+            }
             viewHolder.eventName.text = "Name: ${dataSet!![position].url}"
         }
+    }
+    fun eventOnClick(index: Int){
+        Log.d("test", "Event Clicked. url: ${dataSet!![index].url}")
     }
     override fun getItemCount() = dataSet!!.size
 
