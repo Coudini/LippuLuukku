@@ -28,6 +28,7 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
         val eventType: TextView
         //val eventDescription : TextView
         var eventImage: ImageView
+        var imageSet = false
 
         init {
             eventName = view.findViewById(R.id.event_name)
@@ -70,7 +71,11 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
                 })
             }
         }
-        handleImage()
+        if (!viewHolder.imageSet){
+            handleImage()
+            viewHolder.imageSet = true
+        }
+        //handleImage()
         viewHolder.itemView.setOnClickListener(){
             eventOnClick(position)
             viewHolder.eventName.text = "Name: ${dataSet!![position].url}"
