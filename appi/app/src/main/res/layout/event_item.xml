@@ -33,12 +33,15 @@
                             android:id="@+id/event_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"/>
+                            android:gravity="center"
+                            android:fontFamily="@font/bellbottom"
+                            android:ellipsize="end"/>
                         <TextView
                             android:id="@+id/event_type"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"/>
+                            android:gravity="center"
+                            android:ellipsize="end"/>
 
 
 
@@ -54,22 +57,36 @@
         <LinearLayout
             android:id="@+id/event_bottom_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0px"
             android:orientation="horizontal"
-            android:visibility="visible">
+            android:visibility="invisible">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TESTITEKSTI"/>
-            <ImageButton
-                android:id="@+id/event_cart"
+                android:text="TESTITEKSTI   testttsttsiii  ii   iiii dsf da sdf fad     dfda dippadaapa   ds      dddsddsdsddd d  d"
+                android:layout_weight="2"
+                android:ellipsize="end"/>
+
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                app:srcCompat="@drawable/cart"
-                android:tint="#FFD700"
-                />
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <ImageButton
+                    android:id="@+id/event_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    app:srcCompat="@drawable/cart"
+                    android:tint="#FFD700"/>
+                <TextView
+                    android:id="@+id/event_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
 
+            </LinearLayout>
 
 
         </LinearLayout>

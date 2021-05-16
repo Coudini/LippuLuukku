@@ -33,6 +33,7 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
         val eventType: TextView
         //val eventDescription : TextView
         var eventImage: ImageView
+        var eventPrice : TextView
         var imageSet = false
         var showInfo = false
 
@@ -43,6 +44,7 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
             eventType = view.findViewById(R.id.event_type)
             //eventDescription = view.findViewById(R.id.event_description)
             eventImage = view.findViewById(R.id.event_image)
+            eventPrice = view.findViewById(R.id.event_price)
         }
     }
 
@@ -65,6 +67,11 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
         Log.d("test", "dataset size : ${dataSet?.size}")
         viewHolder.eventName.text = dataSet!![position].name
         viewHolder.eventType.text = dataSet!![position].classifications?.first()?.segment?.name
+
+        // SHOW ONLY ONE PRICE IF MIN == MAX
+        val priceText : String = ""
+
+        viewHolder.eventPrice.text = "${dataSet!![position].priceRanges?.first()?.min} - ${dataSet!![position].priceRanges?.first()?.max} - ${dataSet!![position].priceRanges?.first()?.currency}"
         //viewHolder.eventDescription.text = dataSet!![position].classifications?.first()?.genre?.name
 
 
