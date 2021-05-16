@@ -10,8 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="LIPPULUUKKU"
-        android:fontFamily="@font/champion"
-        android:textSize="50dp"
+        android:fontFamily="@font/space"
+        android:textSize="40dp"
+        android:textColor="#BF26d4a0"
         android:gravity="center"/>
 
 

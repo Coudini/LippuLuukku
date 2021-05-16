@@ -2,6 +2,7 @@ package fi.tuni.lippuluukku
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.util.Log
@@ -22,6 +23,7 @@ import org.json.JSONObject
 
 import fi.tuni.lippuluukku.model.ResponseData
 import com.google.gson.Gson
+import java.io.InputStream
 
 class ResultsActivity : AppCompatActivity() {
 
@@ -73,6 +75,7 @@ class ResultsActivity : AppCompatActivity() {
 
         thread {
             urlFunc(url)
+
             //recyclerView.adapter = RecyclerAdapter(this.results.events)
         }
     }
@@ -108,9 +111,17 @@ class ResultsActivity : AppCompatActivity() {
             val gson = Gson()
             this.results = gson.fromJson(jsonObject.toString(), ResponseData::class.java)
             Log.d("test", "${results?.events?.first()?.name?.toString()}")
-            recyclerView.adapter = RecyclerAdapter(this.results?.events)
+            recyclerView.adapter = RecyclerAdapter(this.results?.events, this)
             //recyclerView.adapter = RecyclerAdapter(this?.results)
+
         }
+    }
+
+
+
+        // SET IMAGES HERE
+    fun setImages(url:String, ){
+            //this.runOnUiThread()
     }
 
     fun downloadUrlAsync(context: Activity, url:String, callback:(result:String?)->Unit):Unit{

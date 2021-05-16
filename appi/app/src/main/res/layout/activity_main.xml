@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="lippuLUUKKU"
-        android:fontFamily="@font/atari"
+        android:fontFamily="@font/ringmaster"
 
         android:textSize="30dp"
         android:textColor="#BF26d4a0"
