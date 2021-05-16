@@ -68,10 +68,14 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
         viewHolder.eventName.text = dataSet!![position].name
         viewHolder.eventType.text = dataSet!![position].classifications?.first()?.segment?.name
 
-        // SHOW ONLY ONE PRICE IF MIN == MAX
-        val priceText : String = ""
+        // null checks
+        if (dataSet!![position].priceRanges?.first()?.min == dataSet!![position].priceRanges?.first()?.max) {
+            viewHolder.eventPrice.text = "${dataSet!![position].priceRanges?.first()?.max}  ${dataSet!![position].priceRanges?.first()?.currency}"
+        } else {
+            viewHolder.eventPrice.text = "${dataSet!![position].priceRanges?.first()?.min} - ${dataSet!![position].priceRanges?.first()?.max}  ${dataSet!![position].priceRanges?.first()?.currency}"
+        }
 
-        viewHolder.eventPrice.text = "${dataSet!![position].priceRanges?.first()?.min} - ${dataSet!![position].priceRanges?.first()?.max} - ${dataSet!![position].priceRanges?.first()?.currency}"
+        //viewHolder.eventPrice.text = "${dataSet!![position].priceRanges?.first()?.min} - ${dataSet!![position].priceRanges?.first()?.max} - ${dataSet!![position].priceRanges?.first()?.currency}"
         //viewHolder.eventDescription.text = dataSet!![position].classifications?.first()?.genre?.name
 
 
