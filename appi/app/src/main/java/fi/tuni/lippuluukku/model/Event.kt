@@ -10,5 +10,6 @@ data class Event(
         val images : MutableList<EventImage>? = null,
         val dates : Start? = null,
         val classifications : MutableList<Classification>? = null,
-        val priceRanges : MutableList<Price>? = null
+        val priceRanges : MutableList<Price>? = null,
+        val _embedded : EventEmbedded? = null
 )
