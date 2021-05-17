@@ -89,16 +89,16 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
             viewHolder.eventType.text = dataSet!![position].classifications?.first()?.segment?.name
 
             // set city
-            viewHolder.eventCity.text = dataSet!![position]._embedded?.venues?.first()?.city.toString()
+            viewHolder.eventCity.text = dataSet!![position]._embedded?.venues?.first()?.city?.name
 
             //set address
-            viewHolder.eventAddress.text = dataSet!![position]._embedded?.venues?.first()?.address.toString()
+            viewHolder.eventAddress.text = dataSet!![position]._embedded?.venues?.first()?.address?.line1
 
             // set date
-            viewHolder.eventDate.text = dataSet!![position].dates?.localDate.toString()
+            viewHolder.eventDate.text = dataSet!![position].dates?.start?.localDate
 
             //set time
-            viewHolder.eventTime.text = dataSet!![position].dates?.localTime.toString()
+            viewHolder.eventTime.text = dataSet!![position].dates?.start?.localTime
 
             // set price shown
             if (dataSet!![position].priceRanges?.first()?.min != null && dataSet!![position].priceRanges?.first()?.max != null) {
