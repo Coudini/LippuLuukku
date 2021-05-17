@@ -125,7 +125,7 @@ class ResultsActivity : AppCompatActivity() {
     fun downloadUrlAsync(context: Activity, url:String, callback:(result:String?)->Unit):Unit{
         thread{
             //var data = getUrl(url)
-            var data = getUrl("https://app.ticketmaster.com/discovery/v2/events?apikey=wl5A0tEYNyQIQ9cTVA9VGVWlB3R8NgfO&locale=*&page=0&city=Tampere&size=100")
+            var data = getUrl("https://app.ticketmaster.com/discovery/v2/events?apikey=wl5A0tEYNyQIQ9cTVA9VGVWlB3R8NgfO&locale=*&keyword=Harry Potter&page=0&size=100")
             context.runOnUiThread{
                 callback(data)
             }

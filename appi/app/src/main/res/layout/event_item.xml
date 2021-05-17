@@ -73,10 +73,7 @@
                     android:background="@android:color/transparent"
                     app:srcCompat="@android:drawable/ic_menu_mapmode"
                     android:tint="#FFD700"/>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+
                     <TextView
                         android:id="@+id/event_city"
                         android:layout_width="wrap_content"
@@ -85,11 +82,7 @@
                         android:id="@+id/event_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+
                     <TextView
                         android:id="@+id/event_date"
                         android:layout_width="wrap_content"
@@ -98,7 +91,7 @@
                         android:id="@+id/event_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
-                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout

@@ -43,7 +43,6 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
         val eventTime : TextView
 
         val eventCart: ImageButton
-        //val eventDescription : TextView
         var eventImage: ImageView
         var eventPrice : TextView
         var attributesSet = false
@@ -60,7 +59,6 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
             eventDate = view.findViewById(R.id.event_date)
             eventTime = view.findViewById(R.id.event_time)
             eventCart = view.findViewById(R.id.event_cart)
-            //eventDescription = view.findViewById(R.id.event_description)
             eventImage = view.findViewById(R.id.event_image)
             eventPrice = view.findViewById(R.id.event_price)
 
@@ -101,7 +99,7 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
             viewHolder.eventTime.text = dataSet!![position].dates?.start?.localTime
 
             // set price shown
-            if (dataSet!![position].priceRanges?.first()?.min != null && dataSet!![position].priceRanges?.first()?.max != null) {
+            if (dataSet[position].priceRanges?.first()?.min != null && dataSet[position].priceRanges?.first()?.max != null) {
                 if (dataSet!![position].priceRanges?.first()?.min == dataSet!![position].priceRanges?.first()?.max) {
                     viewHolder.eventPrice.text = "${dataSet!![position].priceRanges?.first()?.max}\n${dataSet!![position].priceRanges?.first()?.currency}"
                 } else {
@@ -132,24 +130,17 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
 
             //set function when clicking the shopping cart ImageButton
             viewHolder.eventCart.setOnClickListener() {
-                val webIntent: Intent = Uri.parse(dataSet!![position].url).let { destination ->
-                    Intent(Intent.ACTION_VIEW, destination)
-                }
-                context.startActivity(webIntent)
+                val uri = Uri.parse(dataSet!![position].url)
+                val intent = Intent(Intent.ACTION_VIEW, uri)
+                context.startActivity(intent)
             }
 
             //set function when clicking the map ImageButton
             viewHolder.eventMap.setOnClickListener() {
-                //val location = Uri.parse("geo:0,0?q=1600+Amphitheatre+Parkway,+Mountain+View,+California")
-                //val location = Uri.parse("geo:0,0?q=1600+Amphitheatre+Parkway,+Mountain+View,+California")
-
-                //                val mapIntent = Intent(Intent.ACTION_VIEW, location)
                 val uri = Uri.parse("geo:${dataSet[position]._embedded?.venues?.first()?.location?.latitude},${dataSet[position]._embedded?.venues?.first()?.location?.longitude}")
                 val intent = Intent(Intent.ACTION_VIEW, uri)
-                //intent.setPackage("com.google.android.apps.maps")
                 context.startActivity(intent)
             }
-
 
             //load images
             thread{
@@ -161,7 +152,6 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
                         smallestIndex = i
                     }
                 }
-
                 val imageStream: InputStream = URL(dataSet!![position].images?.get(smallestIndex)?.url).getContent() as InputStream
                 val mirage = BitmapFactory.decodeStream(imageStream)
                 context.runOnUiThread(Runnable {
@@ -171,12 +161,15 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
 
             viewHolder.attributesSet = true
         }
-
-
-
     }
 
-    override fun getItemCount() = dataSet!!.size
+    override fun getItemCount() : Int {
+        if (dataSet != null) {
+            return dataSet.size
+        } else {
+            return 0
+        }
 
+    }
 }
 
