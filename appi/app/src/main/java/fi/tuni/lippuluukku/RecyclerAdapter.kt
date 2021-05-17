@@ -15,14 +15,12 @@ import android.widget.LinearLayout
 import android.widget.LinearLayout.LayoutParams
 import android.widget.LinearLayout.LayoutParams.*
 import android.widget.TextView
-import androidx.core.view.marginTop
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import fi.tuni.lippuluukku.model.Event
 import java.io.InputStream
 import java.net.URL
 import kotlin.concurrent.thread
-import androidx.core.view.marginTop
-import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
 
 
 //import androidx.recyclerview.widget.RecyclerView
@@ -37,6 +35,13 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
         val bottomLayout : LinearLayout
         val eventName: TextView
         val eventType: TextView
+
+        val eventMap : ImageButton
+        val eventCity : TextView
+        val eventAddress : TextView
+        val eventDate : TextView
+        val eventTime : TextView
+
         val eventCart: ImageButton
         //val eventDescription : TextView
         var eventImage: ImageView
@@ -49,6 +54,11 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
             bottomLayout = view.findViewById(R.id.event_bottom_layout)
             eventName = view.findViewById(R.id.event_name)
             eventType = view.findViewById(R.id.event_type)
+            eventMap = view.findViewById(R.id.event_map)
+            eventCity = view.findViewById(R.id.event_city)
+            eventAddress = view.findViewById(R.id.event_address)
+            eventDate = view.findViewById(R.id.event_date)
+            eventTime = view.findViewById(R.id.event_time)
             eventCart = view.findViewById(R.id.event_cart)
             //eventDescription = view.findViewById(R.id.event_description)
             eventImage = view.findViewById(R.id.event_image)
@@ -72,21 +82,35 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
 
         //set up values only on first call of this function
         if (!viewHolder.attributesSet) {
-            // set name and type of event
+            // set name
             viewHolder.eventName.text = dataSet!![position].name
+
+            // set type
             viewHolder.eventType.text = dataSet!![position].classifications?.first()?.segment?.name
+
+            // set city
+            viewHolder.eventCity.text = dataSet!![position]._embedded?.venues?.first()?.city.toString()
+
+            //set address
+            viewHolder.eventAddress.text = dataSet!![position]._embedded?.venues?.first()?.address.toString()
+
+            // set date
+            viewHolder.eventDate.text = dataSet!![position].dates?.localDate.toString()
+
+            //set time
+            viewHolder.eventTime.text = dataSet!![position].dates?.localTime.toString()
 
             // set price shown
             if (dataSet!![position].priceRanges?.first()?.min != null && dataSet!![position].priceRanges?.first()?.max != null) {
                 if (dataSet!![position].priceRanges?.first()?.min == dataSet!![position].priceRanges?.first()?.max) {
-                    viewHolder.eventPrice.text = "${dataSet!![position].priceRanges?.first()?.max}  ${dataSet!![position].priceRanges?.first()?.currency}"
+                    viewHolder.eventPrice.text = "${dataSet!![position].priceRanges?.first()?.max}\n${dataSet!![position].priceRanges?.first()?.currency}"
                 } else {
-                    viewHolder.eventPrice.text = "${dataSet!![position].priceRanges?.first()?.min} - ${dataSet!![position].priceRanges?.first()?.max}  ${dataSet!![position].priceRanges?.first()?.currency}"
+                    viewHolder.eventPrice.text = "${dataSet!![position].priceRanges?.first()?.min} - ${dataSet!![position].priceRanges?.first()?.max}\n${dataSet!![position].priceRanges?.first()?.currency}"
                 }
             } else if (dataSet!![position].priceRanges?.first()?.min != null && dataSet!![position].priceRanges?.first()?.min == null) {
-                viewHolder.eventPrice.text = "${dataSet!![position].priceRanges?.first()?.min} ${dataSet!![position].priceRanges?.first()?.currency}"
+                viewHolder.eventPrice.text = "${dataSet!![position].priceRanges?.first()?.min}\n${dataSet!![position].priceRanges?.first()?.currency}"
             } else if (dataSet!![position].priceRanges?.first()?.min == null && dataSet!![position].priceRanges?.first()?.min != null) {
-                viewHolder.eventPrice.text = "${dataSet!![position].priceRanges?.first()?.max} ${dataSet!![position].priceRanges?.first()?.currency}"
+                viewHolder.eventPrice.text = "${dataSet!![position].priceRanges?.first()?.max}\n${dataSet!![position].priceRanges?.first()?.currency}"
             }
 
             //set dropdown actions for top layout on views
@@ -113,6 +137,19 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
                 }
                 context.startActivity(webIntent)
             }
+
+            //set function when clicking the map ImageButton
+            viewHolder.eventMap.setOnClickListener() {
+                //val location = Uri.parse("geo:0,0?q=1600+Amphitheatre+Parkway,+Mountain+View,+California")
+                //val location = Uri.parse("geo:0,0?q=1600+Amphitheatre+Parkway,+Mountain+View,+California")
+
+                //                val mapIntent = Intent(Intent.ACTION_VIEW, location)
+                val uri = Uri.parse("geo:${dataSet[position]._embedded?.venues?.first()?.location?.latitude},${dataSet[position]._embedded?.venues?.first()?.location?.longitude}")
+                val intent = Intent(Intent.ACTION_VIEW, uri)
+                //intent.setPackage("com.google.android.apps.maps")
+                context.startActivity(intent)
+            }
+
 
             //load images
             thread{

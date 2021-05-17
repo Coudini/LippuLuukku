@@ -96,31 +96,21 @@ class ResultsActivity : AppCompatActivity() {
             this.testi.text = it
             Log.d("test", it.toString())
 
-            //var jsonData = JSONObject(it)
-            //Log.d("test", "jsonData: ${jsonData.toString()}")
-            //var jsonArray = jsonData.getJSONArray("_embedded")
-            //var jsonObject = jsonData.getJSONObject("_embedded")
-            //var jsonObject2 = jsonObject.getJSONArray("events")
-            //Log.d("test", "jsonObject: ${jsonObject2.toString()}")
-            //var tempArray : JSONArray = jsonObject.getJSONArray("events")
-            //Log.d("test", "tempArray: ${tempArray.toString()}")
-
+        /*
             val mp = ObjectMapper()
             val myObject: ResponseDataHolder = mp.readValue(it, ResponseDataHolder::class.java)
             recyclerView.recycledViewPool.setMaxRecycledViews(0,100)
             recyclerView.setItemViewCacheSize(100)
             recyclerView.adapter = RecyclerAdapter(myObject._embedded?.events, this)
-            //recyclerView.adapter.
+         */
 
+            val jsonData = JSONObject(it)
+            val gson = Gson()
+            val responseResults = gson.fromJson(jsonData.toString(), ResponseDataHolder::class.java)
+            recyclerView.recycledViewPool.setMaxRecycledViews(0,100)
+            recyclerView.setItemViewCacheSize(100)
+            recyclerView.adapter = RecyclerAdapter(responseResults._embedded?.events, this)
 
-
-
-
-            //val gson = Gson()
-            //this.results = gson.fromJson(jsonObject.toString(), ResponseData::class.java)
-            //Log.d("test", "gson results events count${results?.events?.count()}")
-            //recyclerView.adapter = RecyclerAdapter(this.results?.events, this)
-            //recyclerView.adapter = RecyclerAdapter(this?.results)
 
         }
     }

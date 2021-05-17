@@ -12,4 +12,5 @@ data class Event(
         val classifications : MutableList<Classification>? = null,
         val priceRanges : MutableList<Price>? = null,
         val _embedded : EventEmbedded? = null
+        //val venues : MutableList<Venue>? = null
 )
