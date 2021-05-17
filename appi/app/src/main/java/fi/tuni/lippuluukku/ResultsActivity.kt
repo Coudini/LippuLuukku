@@ -107,7 +107,6 @@ class ResultsActivity : AppCompatActivity() {
 
             val mp = ObjectMapper()
             val myObject: ResponseDataHolder = mp.readValue(it, ResponseDataHolder::class.java)
-            //val events: MutableList<fi.tuni.lippuluukku.model.Event>? = myObject._embedded?.events
             recyclerView.recycledViewPool.setMaxRecycledViews(0,100)
             recyclerView.setItemViewCacheSize(100)
             recyclerView.adapter = RecyclerAdapter(myObject._embedded?.events, this)
