@@ -1,32 +1,23 @@
 package fi.tuni.lippuluukku
 
 import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
-import android.graphics.drawable.ColorDrawable
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.net.HttpURLConnection
-import java.net.URL
-import kotlin.concurrent.thread
-import com.fasterxml.jackson.databind.ObjectMapper
+
 
 class MainActivity : AppCompatActivity(), LocationListener {
 
@@ -83,6 +74,18 @@ class MainActivity : AppCompatActivity(), LocationListener {
         setContentView(R.layout.activity_main)
         getLocation()
         animateBackground()
+
+        // save data into share SharePreference
+        // save data into share SharePreference
+        val sp1 = getSharedPreferences("FILE_NAME", MODE_PRIVATE)
+        val edit = sp1.edit()
+        edit.putInt("key", 0)
+        edit.apply()
+
+
+        // get data from share SharePreference
+        val sp2 = getSharedPreferences("FILE_NAME", MODE_PRIVATE)
+        val result = sp2.getInt("key", 0)
 
         this.editKeyword = findViewById(R.id.editKeyword)
         this.editKeyword.addTextChangedListener(object : TextWatcher {
@@ -145,8 +148,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
         this.locationSpinner = findViewById(R.id.locationSpinner)
         if (this.locationSpinner != null) {
-            val adapter2 = ArrayAdapter<String>(this,R.layout.ghost_text,this.locationsArray)
-            val adapter = ArrayAdapter(this,android.R.layout.simple_spinner_item,this.locationsArray)
+            val adapter2 = ArrayAdapter<String>(this, R.layout.ghost_text, this.locationsArray)
+            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, this.locationsArray)
             this.locationSpinner.dropDownVerticalOffset = 75
             this.locationSpinner.adapter = adapter
 
@@ -155,7 +158,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
             object : AdapterView.OnItemSelectedListener {
 
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    Log.d("test","item selected: ${locationsArray[position]}")
+                    Log.d("test", "item selected: ${locationsArray[position]}")
 
                     locationSelected = locationsArray[position]
                     editLocation.setText(locationsArray[position])
@@ -165,7 +168,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
-                    Log.d("test","nothing selected")
+                    Log.d("test", "nothing selected")
 
                 }
             }.also { this.locationSpinner.onItemSelectedListener = it }
@@ -173,13 +176,13 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
         this.keywordSpinner = findViewById(R.id.keywordSpinner)
         if (this.keywordSpinner != null) {
-            val adapter = ArrayAdapter(this,android.R.layout.simple_spinner_item,this.keywordsArray)
+            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, this.keywordsArray)
             this.keywordSpinner.dropDownVerticalOffset = 75
             this.keywordSpinner.adapter = adapter
             object :
                     AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    Log.d("test","item selected: ${keywordsArray[position]}")
+                    Log.d("test", "item selected: ${keywordsArray[position]}")
                     keywordSelected = keywordsArray[position]
                     editKeyword.setText(keywordsArray[position])
                     //test
@@ -187,7 +190,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
-                    Log.d("test","nothing selected")
+                    Log.d("test", "nothing selected")
                 }
             }.also { this.keywordSpinner.onItemSelectedListener = it }
         }
@@ -199,7 +202,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCode)
-        } else {Log.d("test","fail")}
+        } else {Log.d("test", "fail")}
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5f, this)
     }
 
@@ -211,14 +214,14 @@ class MainActivity : AppCompatActivity(), LocationListener {
         animationDrawable.start()
     }
 
-    private fun preferencesOnClick(button:View){
+    private fun preferencesOnClick(button: View){
         val preferencesIntent = Intent(this, PreferencesActivity::class.java)
-        preferencesIntent.putExtra("locationsArray",this.locationsArray)
-        preferencesIntent.putExtra("keywordsArray",this.keywordsArray)
+        preferencesIntent.putExtra("locationsArray", this.locationsArray)
+        preferencesIntent.putExtra("keywordsArray", this.keywordsArray)
         startActivityForResult(preferencesIntent, 1)
     }
 
-    private fun searchOnClick(button:View) {
+    private fun searchOnClick(button: View) {
         val resultsIntent = Intent(this, ResultsActivity::class.java)
         //resultsIntent.putExtra("searchUrl", this.url1)
         var invalidParameters = false
@@ -226,20 +229,20 @@ class MainActivity : AppCompatActivity(), LocationListener {
         // Dont use gps
         if (this.locationSelected != "Here" && this.locationSelected != "Anywhere") {
             if (this.keywordSelected != "Anything") {
-                tempUrl = util.getUrl(locationSelected,keywordSelected)
+                tempUrl = util.getUrl(locationSelected, keywordSelected)
             } else {
-                tempUrl = util.getUrl(locationSelected,null)
+                tempUrl = util.getUrl(locationSelected, null)
             }
             // Use gps
         } else if (this.locationSelected == "Here") {
             if (this.keywordSelected != "Anything") {
-                tempUrl = util.getUrlWithGps(latlonString,keywordSelected)
+                tempUrl = util.getUrlWithGps(latlonString, keywordSelected)
             } else {
-                tempUrl = util.getUrlWithGps(latlonString,null)
+                tempUrl = util.getUrlWithGps(latlonString, null)
             }
         } else if (this.locationSelected == "Anywhere") {
             if (this.keywordSelected != "Anything") {
-                tempUrl = util.getUrl(null,keywordSelected)
+                tempUrl = util.getUrl(null, keywordSelected)
             } else {
                 invalidParameters = true
                 val toast = Toast.makeText(getApplicationContext(),

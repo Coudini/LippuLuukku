@@ -7,7 +7,12 @@ import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.view.animation.AnimationUtils
+import android.view.animation.LinearInterpolator
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -28,14 +33,11 @@ import java.io.InputStream
 
 class ResultsActivity : AppCompatActivity() {
 
-    //test button
-    lateinit var testButton : Button
-    lateinit var dataTest : TextView
-    lateinit var testi : TextView
+    lateinit var loadingAnimation : ImageView
+    lateinit var resultStatus : TextView
+    lateinit var resultImage : ImageView
 
     lateinit var url : String
-
-    lateinit var results: ResponseDataHolder
 
     lateinit var recyclerView : RecyclerView
     lateinit var linearLayoutManager : LinearLayoutManager
@@ -51,35 +53,30 @@ class ResultsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_results)
         animateBackground()
-        this.testi = findViewById(R.id.testi)
-        this.testButton = findViewById(R.id.dataButton)
-        this.testButton.setOnClickListener(){
-            this.testFunc(this.testButton)
-        }
-        this.dataTest =  findViewById(R.id.dataTest)
 
         extras = intent.extras
         if(extras != null) {
             url = extras!!.getString("url").toString()
-        //urlFunc(extras!!.getString("url").toString())
         }
-
+        loadingAnimation = findViewById(R.id.loading_image)
+        resultStatus = findViewById(R.id.result_status)
+        resultImage = findViewById(R.id.no_results_image)
         linearLayoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false)
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = linearLayoutManager
-
+        thread {
+            val rotation = AnimationUtils.loadAnimation(this, R.anim.rotation)
+ //           rotation.fillAfter = true
+            loadingAnimation.startAnimation(rotation)
+            //Glide.with(this).load(R.drawable.giphy).into(imageView)
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        // change to its own class to hold images? functions etc..
-        //var data : String?
         thread {
             urlFunc(url)
-
-            //recyclerView.adapter = RecyclerAdapter(this.results._embedded.events, this)
         }
-
     }
 
     fun animateBackground(){
@@ -93,8 +90,6 @@ class ResultsActivity : AppCompatActivity() {
     fun urlFunc(url: String){
         downloadUrlAsync(this, url){
 
-            this.testi.text = it
-            Log.d("test", it.toString())
 
         /*
             val mp = ObjectMapper()
@@ -110,17 +105,26 @@ class ResultsActivity : AppCompatActivity() {
             recyclerView.recycledViewPool.setMaxRecycledViews(0,100)
             recyclerView.setItemViewCacheSize(100)
             recyclerView.adapter = RecyclerAdapter(responseResults._embedded?.events, this)
+            println("results not found: " + responseResults._embedded?.events?.first())
 
+            var params : LinearLayout.LayoutParams = loadingAnimation.layoutParams as LinearLayout.LayoutParams
+            params.height = 0
+            params.width = 0
+            loadingAnimation.clearAnimation()
+            loadingAnimation.layoutParams = params
+            loadingAnimation.visibility = View.INVISIBLE
 
+            if (responseResults._embedded?.events?.first() == null){
+                resultStatus.text = "Nothing found"
+                params = resultImage.layoutParams as LinearLayout.LayoutParams
+                params.height = WRAP_CONTENT
+                params.width = MATCH_PARENT
+                resultImage.visibility = View.VISIBLE
+                resultImage.layoutParams = params
+            }
         }
     }
 
-
-
-        // SET IMAGES HERE
-    fun setImages(url:String, ){
-            //this.runOnUiThread()
-    }
 
     fun downloadUrlAsync(context: Activity, url:String, callback:(result:String?)->Unit):Unit{
         thread{

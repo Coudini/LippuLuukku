@@ -17,21 +17,25 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import fi.tuni.lippuluukku.listModel.UserList
 
 class PreferencesActivity : AppCompatActivity() {
 
+    lateinit var testArray1 : Array<String>
+    lateinit var testArray2 : Array<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_preferences)
 
         val extras = intent.extras
         if(extras != null) {
-            val testArray1 = extras.getStringArray("locationsArray")
-            val testArray2 = extras.getStringArray("keywordsArray")
+            testArray1 = extras.getStringArray("locationsArray")!!
+            testArray2 = extras.getStringArray("keywordsArray")!!
             Log.d("extras", testArray1?.count().toString())
             Log.d("extras", testArray2?.count().toString())
         }
         animateBackground()
+        testLoad()
     }
     fun animateBackground(){
         val linearLayout : LinearLayout = findViewById(R.id.layout)
@@ -39,6 +43,16 @@ class PreferencesActivity : AppCompatActivity() {
         animationDrawable.setEnterFadeDuration(2000)
         animationDrawable.setExitFadeDuration(4000)
         animationDrawable.start()
+    }
+    var util = Util()
+
+    fun testSave (ul: UserList) {
+        util.saveUserData(this, ul)
+    }
+    fun testLoad () {
+        val tempArray = util.loadUserData(this)
+        println(tempArray)
+        testSave(tempArray!!)
     }
     override fun onBackPressed() {
         val intent = Intent()

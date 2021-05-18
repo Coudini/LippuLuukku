@@ -1,23 +1,21 @@
 package fi.tuni.lippuluukku
 
-import android.Manifest
-import android.content.Context
-import android.content.pm.PackageManager
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
-import android.os.Bundle
-import android.os.PersistableBundle
+import android.app.Activity
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
+import android.widget.Toast
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import fi.tuni.lippuluukku.listModel.Keyword
+import fi.tuni.lippuluukku.listModel.Location
+import fi.tuni.lippuluukku.listModel.UserList
+
 
 class Util {
 
     val apiKey = "wl5A0tEYNyQIQ9cTVA9VGVWlB3R8NgfO"
-    val radius = 30
+    val radius = 50
 
 
     fun getUrlWithGps(location: String, keyWord: String?):String{
@@ -51,33 +49,44 @@ class Util {
         }
     }
 
-    fun setUpEvents(){
+    var tempUserList: UserList? = null
+    fun saveUserData(context: Activity, userList: UserList){
+        val sharedPreferences: SharedPreferences = context.getSharedPreferences("userData", MODE_PRIVATE)
+
+        val editor = sharedPreferences.edit()
+
+        val gson = Gson()
+
+        val json = gson.toJson(userList)
+
+        editor.putString("userData", json)
+
+        editor.apply()
+
+        Toast.makeText(context, "Saved data", Toast.LENGTH_SHORT).show()
 
     }
+    fun loadUserData(context: Activity) : UserList? {
 
-    /*
+        val sharedPreferences: SharedPreferences = context.getSharedPreferences("userData", MODE_PRIVATE)
+
+        val gson = Gson()
+
+        val json = sharedPreferences.getString("userData", null)
+        Log.d("Shared Preferences", "SharedPreferences Json: "+json.toString())
+
+        tempUserList = gson.fromJson(json, UserList::class.java)
 
 
-
-    var apikey : String = "wl5A0tEYNyQIQ9cTVA9VGVWlB3R8NgfO"
-    var band = "metallica"
-    var city = "tampere"
-    var radius = 30
-
-    //request with keyword and city
-    var url1 : String = "https://app.ticketmaster.com/discovery/v2/events?apikey=${apikey}&keyword=${band}&locale=*&city=${city}"
-
-    //request with keyword
-    var url2 : String = "https://app.ticketmaster.com/discovery/v2/events?apikey=${apikey}&keyword=${band}&locale=*"
-
-    // request with city
-    var url3 : String = "https://app.ticketmaster.com/discovery/v2/events?apikey=${apikey}&locale=*&city=${city}"
-
-    //request with geopoint(lat,lon) and search radius
-    var url4 : String = "https://app.ticketmaster.com/discovery/v2/events?apikey=${apikey}&radius=${radius}&locale=*&geoPoint=${latlonString}"
-
-    //request with keyword, geopoint(lat,lon) and search radius
-    var url5 :String = "https://app.ticketmaster.com/discovery/v2/events?apikey=${apikey}&keyword=${band}&radius=${radius}&locale=*&geoPoint=${latlonString}"
-
-     */
+        if (tempUserList == null) {
+            Log.d("Shared Preferences", "No user list found, creating a new one")
+            var initKeywords : MutableList<Keyword> = mutableListOf(Keyword("Anything"))
+            var initLocations : MutableList<Location> = mutableListOf(Location("Here"),Location("Anywhere"))
+            var initUserList = UserList(initLocations,initKeywords)
+            tempUserList = initUserList
+        } else {
+            Log.d("Shared Preferences", "User list found: ${tempUserList.toString()}")
+        }
+        return tempUserList
+    }
 }

@@ -19,60 +19,6 @@
         android:textColor="#BF26d4a0"
         android:gravity="center"/>
 
-    <!--
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
-    </ScrollView>
-    -->
-    <!--
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="button"/>
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="button"/>
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="button"/>
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="button"/>
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="button"/>
-    -->
-
-    <!--
-    <Button
-        android:id="@+id/activityButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="preferences"/>
-
-    <Button
-        android:id="@+id/searchButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="search"/>
--->
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
