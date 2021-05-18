@@ -67,18 +67,18 @@ class ResultsActivity : AppCompatActivity() {
         linearLayoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false)
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = linearLayoutManager
-        thread {
-            urlFunc(url)
 
-            //recyclerView.adapter = RecyclerAdapter(this.results._embedded.events, this)
-        }
     }
 
     override fun onResume() {
         super.onResume()
         // change to its own class to hold images? functions etc..
         //var data : String?
+        thread {
+            urlFunc(url)
 
+            //recyclerView.adapter = RecyclerAdapter(this.results._embedded.events, this)
+        }
 
     }
 
@@ -124,8 +124,8 @@ class ResultsActivity : AppCompatActivity() {
 
     fun downloadUrlAsync(context: Activity, url:String, callback:(result:String?)->Unit):Unit{
         thread{
-            //var data = getUrl(url)
-            var data = getUrl("https://app.ticketmaster.com/discovery/v2/events?apikey=wl5A0tEYNyQIQ9cTVA9VGVWlB3R8NgfO&locale=*&page=0&city=helsinki&size=100")
+            var data = getUrl(url)
+            //var data = getUrl("https://app.ticketmaster.com/discovery/v2/events?apikey=wl5A0tEYNyQIQ9cTVA9VGVWlB3R8NgfO&locale=*&page=0&city=helsinki&size=100")
             context.runOnUiThread{
                 callback(data)
             }

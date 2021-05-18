@@ -19,21 +19,35 @@ class Util {
     val apiKey = "wl5A0tEYNyQIQ9cTVA9VGVWlB3R8NgfO"
     val radius = 30
 
+
     fun getUrlWithGps(location: String, keyWord: String?):String{
+        //gps & keyword
         if (keyWord != null) {
-            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&keyword=${keyWord}&radius=${radius}&geoPoint=${location}&size=50"//&size=50&page=0"
-        } else {
-            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&radius=${radius}&geoPoint=${location}"//&size=50&page=0"
+            //return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&locale=*&keyword=${keyWord}&radius=${radius}&geoPoint=${location}&size=50"//&size=50&page=0"
+            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&keyword=${keyWord}&radius=${radius}&locale=*&size=100&page=0&geoPoint=${location}"
+        }
+        //gps
+        else {
+            //return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&radius=${radius}&geoPoint=${location}"//&size=50&page=0"
+            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&radius=${radius}&locale=*&size=100&page=0&geoPoint=${location}"
         }
     }
 
     fun getUrl(location: String?, keyWord: String?):String{
+        //location
         if (location != null && keyWord == null) {
-            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&city=${location}"
-        } else if (location == null && keyWord != null) {
-            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&keyword=${keyWord}"
-        } else {
-            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&keyword=${keyWord}&locale=*&page=0&city=${location}"
+            //return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&city=${location}"
+            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&locale=*&size=100&page=0&city=${location}"
+        }
+        //keyword
+        else if (location == null && keyWord != null) {
+            //return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&keyword=${keyWord}"
+            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&keyword=${keyWord}&locale=*&size=100&page=0"
+        }
+        //location & keyword
+        else {
+            //return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&keyword=${keyWord}&locale=*&page=0&city=${location}"
+            return "https://app.ticketmaster.com/discovery/v2/events?apikey=${apiKey}&keyword=${keyWord}&locale=*&size=100&page=0&city=${location}"
         }
     }
 
