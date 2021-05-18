@@ -17,12 +17,19 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import fi.tuni.lippuluukku.listModel.UserList
 
 class PreferencesActivity : AppCompatActivity() {
 
     lateinit var testArray1 : Array<String>
     lateinit var testArray2 : Array<String>
+    lateinit var keywordsRecyclerView : RecyclerView
+    lateinit var locationsRecyclerView : RecyclerView
+    lateinit var keywordsLinearLayoutManager : LinearLayoutManager
+    lateinit var locationsLinearLayoutManager : LinearLayoutManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_preferences)
@@ -34,8 +41,19 @@ class PreferencesActivity : AppCompatActivity() {
             Log.d("extras", testArray1?.count().toString())
             Log.d("extras", testArray2?.count().toString())
         }
+        keywordsRecyclerView = findViewById(R.id.keywords_recyclerView)
+        locationsRecyclerView = findViewById(R.id.locations_recyclerView)
+        keywordsLinearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        locationsLinearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        keywordsRecyclerView.layoutManager = keywordsLinearLayoutManager
+        locationsRecyclerView.layoutManager = locationsLinearLayoutManager
+
+        keywordsRecyclerView.adapter = KeywordRecyclerAdapter(util.loadUserData(this)?.keywords, this)
+        locationsRecyclerView.adapter = LocationRecyclerAdapter(util.loadUserData(this)?.locations, this)
+
+
         animateBackground()
-        testLoad()
+        //testLoad()
     }
     fun animateBackground(){
         val linearLayout : LinearLayout = findViewById(R.id.layout)
@@ -52,7 +70,7 @@ class PreferencesActivity : AppCompatActivity() {
     fun testLoad () {
         val tempArray = util.loadUserData(this)
         println(tempArray)
-        testSave(tempArray!!)
+        //testSave(tempArray!!)
     }
     override fun onBackPressed() {
         val intent = Intent()

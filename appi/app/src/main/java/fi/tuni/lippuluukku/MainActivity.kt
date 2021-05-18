@@ -75,17 +75,9 @@ class MainActivity : AppCompatActivity(), LocationListener {
         getLocation()
         animateBackground()
 
-        // save data into share SharePreference
-        // save data into share SharePreference
-        val sp1 = getSharedPreferences("FILE_NAME", MODE_PRIVATE)
-        val edit = sp1.edit()
-        edit.putInt("key", 0)
-        edit.apply()
-
-
-        // get data from share SharePreference
-        val sp2 = getSharedPreferences("FILE_NAME", MODE_PRIVATE)
-        val result = sp2.getInt("key", 0)
+        Log.d("System preferences", "${util.loadUserData(this).toString()}")
+        Log.d("System preferences", "${util.loadUserData(this)?.keywords?.count()}")
+        Log.d("System preferences", "${util.loadUserData(this)?.locations?.count()}")
 
         this.editKeyword = findViewById(R.id.editKeyword)
         this.editKeyword.addTextChangedListener(object : TextWatcher {
