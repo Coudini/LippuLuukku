@@ -140,7 +140,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
         this.locationSpinner = findViewById(R.id.locationSpinner)
         if (this.locationSpinner != null) {
-            val adapter2 = ArrayAdapter<String>(this, R.layout.ghost_text, this.locationsArray)
             val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, this.locationsArray)
             this.locationSpinner.dropDownVerticalOffset = 75
             this.locationSpinner.adapter = adapter
