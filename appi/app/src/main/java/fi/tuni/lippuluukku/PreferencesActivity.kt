@@ -5,20 +5,19 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.AnimationDrawable
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import fi.tuni.lippuluukku.listModel.Keyword
+import fi.tuni.lippuluukku.listModel.Location
 import fi.tuni.lippuluukku.listModel.UserList
 
 
@@ -33,6 +32,14 @@ class PreferencesActivity : AppCompatActivity() {
     lateinit var locationsRecyclerView : RecyclerView
     lateinit var keywordsLinearLayoutManager : LinearLayoutManager
     lateinit var locationsLinearLayoutManager : LinearLayoutManager
+
+    lateinit var editKeyword : EditText
+    lateinit var editLocation : EditText
+    lateinit var addKeyword : ImageButton
+    lateinit var addLocation : ImageButton
+
+    var keyword : String? = null
+    var location : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +72,60 @@ class PreferencesActivity : AppCompatActivity() {
         keywordsRecyclerView.adapter = KeywordRecyclerAdapter(util.loadUserData(this)?.keywords, this, true)
         locationsRecyclerView.adapter = LocationRecyclerAdapter(util.loadUserData(this)?.locations, this)
 
+        editKeyword = findViewById(R.id.preferences_add_keyword)
+        editLocation = findViewById(R.id.preferences_add_location)
+        addKeyword = findViewById(R.id.preferences_add_keyword_button)
+        addLocation = findViewById(R.id.preferences_add_location_button)
+
+        editKeyword.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {}
+
+            override fun beforeTextChanged(s: CharSequence, start: Int,
+                                           count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int,
+                                       before: Int, count: Int) {
+                //setLocation(s.toString())
+                keyword = s.toString()
+            }
+        })
+
+        editLocation.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {}
+
+            override fun beforeTextChanged(s: CharSequence, start: Int,
+                                           count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int,
+                                       before: Int, count: Int) {
+                //setLocation(s.toString())
+                location = s.toString()
+            }
+        })
+
+        addKeyword.setOnClickListener(){
+            if(keyword!=null && keyword.toString().length > 0){
+                var tempArray = util.loadUserData(this)
+                tempArray?.keywords?.add(Keyword((keyword)))
+                util.saveUserData(this,UserList(tempArray?.locations,tempArray?.keywords))
+                keywordsRecyclerView.adapter = KeywordRecyclerAdapter(util.loadUserData(this)?.keywords, this, true)
+            } else {
+                Toast.makeText(this, "No info provided", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        addLocation.setOnClickListener(){
+            if(location!=null && location.toString().length > 0){
+                var tempArray = util.loadUserData(this)
+                tempArray?.locations?.add(Location((location)))
+                util.saveUserData(this,UserList(tempArray?.locations,tempArray?.keywords))
+                locationsRecyclerView.adapter = LocationRecyclerAdapter(util.loadUserData(this)?.locations, this)
+            } else {
+                Toast.makeText(this, "No info provided", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         animateBackground()
         //testLoad()

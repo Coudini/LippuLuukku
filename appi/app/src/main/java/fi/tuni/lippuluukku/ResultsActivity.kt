@@ -11,10 +11,7 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -42,6 +39,8 @@ class ResultsActivity : AppCompatActivity() {
     lateinit var recyclerView : RecyclerView
     lateinit var linearLayoutManager : LinearLayoutManager
 
+
+
     var extras : Bundle? = null
 
     //var res: MutableList<ResponseData>? = null
@@ -64,6 +63,7 @@ class ResultsActivity : AppCompatActivity() {
         linearLayoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false)
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = linearLayoutManager
+
         thread {
             val rotation = AnimationUtils.loadAnimation(this, R.anim.rotation)
  //           rotation.fillAfter = true
