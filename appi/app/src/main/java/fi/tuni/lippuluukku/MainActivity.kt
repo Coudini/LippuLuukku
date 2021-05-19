@@ -17,6 +17,8 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 
 class MainActivity : AppCompatActivity(), LocationListener {
@@ -27,13 +29,17 @@ class MainActivity : AppCompatActivity(), LocationListener {
     lateinit var preferencesButton : ImageButton
     lateinit var searchButton : ImageButton
 
-    lateinit var locationSpinner : Spinner
-    lateinit var keywordSpinner : Spinner
 
     lateinit var editKeyword : EditText
     lateinit var editLocation : EditText
     lateinit var locationSelected : String
     lateinit var keywordSelected : String
+
+    lateinit var keywordsRecyclerView : RecyclerView
+    lateinit var locationsRecyclerView : RecyclerView
+    lateinit var keywordsLinearLayoutManager : LinearLayoutManager
+    lateinit var locationsLinearLayoutManager : LinearLayoutManager
+
 
     var lat = 0.0
     var lon = 0.0
@@ -41,14 +47,11 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
     var util = Util()
 
-    var locationsArray : Array<String> = arrayOf("Here", "Anywhere", "Tampere")
-    var keywordsArray : Array<String> = arrayOf("Anything", "Metallica")
 
     //Test-strings
     lateinit var gpsTest : TextView
     lateinit var locationTest : TextView
     lateinit var keywordTest : TextView
-    lateinit var urlTest : TextView
 
 
     override fun onLocationChanged(location: Location) {
@@ -73,11 +76,20 @@ class MainActivity : AppCompatActivity(), LocationListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         getLocation()
+
         animateBackground()
 
-        Log.d("System preferences", "${util.loadUserData(this).toString()}")
-        Log.d("System preferences", "${util.loadUserData(this)?.keywords?.count()}")
-        Log.d("System preferences", "${util.loadUserData(this)?.locations?.count()}")
+        keywordsRecyclerView = findViewById(R.id.keywords_recyclerView)
+        locationsRecyclerView = findViewById(R.id.locations_recyclerView)
+        keywordsLinearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        locationsLinearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        keywordsRecyclerView.layoutManager = keywordsLinearLayoutManager
+        locationsRecyclerView.layoutManager = locationsLinearLayoutManager
+
+        keywordsRecyclerView.adapter = KeywordRecyclerAdapter(util.loadUserData(this)?.keywords, this, true)
+        locationsRecyclerView.adapter = LocationRecyclerAdapter(util.loadUserData(this)?.locations, this)
+
+
 
         this.editKeyword = findViewById(R.id.editKeyword)
         this.editKeyword.addTextChangedListener(object : TextWatcher {
@@ -91,9 +103,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
             override fun onTextChanged(s: CharSequence, start: Int,
                                        before: Int, count: Int) {
                 //s
+                //setKeyword(s.toString())
                 keywordSelected = s.toString()
-                //test
-                keywordTest.text = s.toString()
             }
         })
         this.editLocation = findViewById(R.id.editLocation)
@@ -107,24 +118,20 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
             override fun onTextChanged(s: CharSequence, start: Int,
                                        before: Int, count: Int) {
+                //setLocation(s.toString())
                 locationSelected = s.toString()
             }
         })
+
+
+        setLocation(util.loadUserData(this)?.locations?.first()?.name!!)
+        setKeyword(util.loadUserData(this)?.keywords?.first()?.name!!)
 
         //Test strings
         this.gpsTest = findViewById(R.id.gpsTest)
         this.locationTest = findViewById(R.id.locationTest)
         this.keywordTest = findViewById(R.id.keywordTest)
-        this.urlTest = findViewById(R.id.urlTest)
 
-/*
-        Log.d("test", "getLocation()")
-        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCode)
-        } else {Log.d("test","fail")}
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5f, this)
-*/
 
 
 
@@ -138,54 +145,14 @@ class MainActivity : AppCompatActivity(), LocationListener {
             this.searchOnClick(this.searchButton)
         }
 
-        this.locationSpinner = findViewById(R.id.locationSpinner)
-        if (this.locationSpinner != null) {
-            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, this.locationsArray)
-            this.locationSpinner.dropDownVerticalOffset = 75
-            this.locationSpinner.adapter = adapter
 
+    }
 
-
-            object : AdapterView.OnItemSelectedListener {
-
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    Log.d("test", "item selected: ${locationsArray[position]}")
-
-                    locationSelected = locationsArray[position]
-                    editLocation.setText(locationsArray[position])
-
-                    //test
-                    locationTest.text = locationSelected
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    Log.d("test", "nothing selected")
-
-                }
-            }.also { this.locationSpinner.onItemSelectedListener = it }
-        }
-
-        this.keywordSpinner = findViewById(R.id.keywordSpinner)
-        if (this.keywordSpinner != null) {
-            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, this.keywordsArray)
-            this.keywordSpinner.dropDownVerticalOffset = 75
-            this.keywordSpinner.adapter = adapter
-            object :
-                    AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    Log.d("test", "item selected: ${keywordsArray[position]}")
-                    keywordSelected = keywordsArray[position]
-                    editKeyword.setText(keywordsArray[position])
-                    //test
-                    keywordTest.text = keywordSelected
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    Log.d("test", "nothing selected")
-                }
-            }.also { this.keywordSpinner.onItemSelectedListener = it }
-        }
-
+    override fun onResume() {
+        super.onResume()
+        getLocation()
+        setLocation(util.loadUserData(this)?.locations?.first()?.name!!)
+        setKeyword(util.loadUserData(this)?.keywords?.first()?.name!!)
     }
 
     fun getLocation () {
@@ -207,8 +174,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
     private fun preferencesOnClick(button: View){
         val preferencesIntent = Intent(this, PreferencesActivity::class.java)
-        preferencesIntent.putExtra("locationsArray", this.locationsArray)
-        preferencesIntent.putExtra("keywordsArray", this.keywordsArray)
+//        preferencesIntent.putExtra("locationsArray", this.locationsArray)
+//        preferencesIntent.putExtra("keywordsArray", this.keywordsArray)
         startActivityForResult(preferencesIntent, 1)
     }
 
@@ -244,12 +211,20 @@ class MainActivity : AppCompatActivity(), LocationListener {
         }
 
         //test
-        this.urlTest.text = tempUrl
         if (!invalidParameters) {
             resultsIntent.putExtra("url", tempUrl)
             Log.d("test", tempUrl)
             startActivity(resultsIntent)
         }
+    }
+
+    fun setLocation(location: String){
+        locationSelected = location
+        editLocation.setText(location)
+    }
+    fun setKeyword(keyword: String){
+        keywordSelected = keyword
+        editKeyword.setText(keyword)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -259,11 +234,11 @@ class MainActivity : AppCompatActivity(), LocationListener {
             if(resultCode == RESULT_OK) {
                 val tempLocations = data?.extras?.getStringArray("locationsArray")
                 if (tempLocations != null) {
-                    this.locationsArray = tempLocations
+  //                  this.locationsArray = tempLocations
                 }
                 val tempKeywords = data?.extras?.getStringArray("keywordsArray")
                 if (tempKeywords != null) {
-                    this.keywordsArray = tempKeywords
+    //                this.keywordsArray = tempKeywords
                 }
             }
         }

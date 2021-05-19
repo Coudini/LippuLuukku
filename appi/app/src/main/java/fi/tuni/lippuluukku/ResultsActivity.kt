@@ -102,8 +102,8 @@ class ResultsActivity : AppCompatActivity() {
             val jsonData = JSONObject(it)
             val gson = Gson()
             val responseResults = gson.fromJson(jsonData.toString(), ResponseDataHolder::class.java)
-            recyclerView.recycledViewPool.setMaxRecycledViews(0,100)
-            recyclerView.setItemViewCacheSize(100)
+            recyclerView.recycledViewPool.setMaxRecycledViews(0,1000)
+            recyclerView.setItemViewCacheSize(1000)
             recyclerView.adapter = RecyclerAdapter(responseResults._embedded?.events, this)
             println("results not found: " + responseResults._embedded?.events?.first())
 

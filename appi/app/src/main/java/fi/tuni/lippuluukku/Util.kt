@@ -80,8 +80,8 @@ class Util {
 
         if (tempUserList == null) {
             Log.d("Shared Preferences", "No user list found, creating a new one")
-            var initKeywords : MutableList<Keyword> = mutableListOf(Keyword("Anything"))
-            var initLocations : MutableList<Location> = mutableListOf(Location("Here"),Location("Anywhere"))
+            var initKeywords : MutableList<Keyword> = mutableListOf(Keyword("Anything"),Keyword("Metallica"),Keyword("Harry Potter"),Keyword("Test"),Keyword("Test"),Keyword("Test"),Keyword("Test"),Keyword("Test"),Keyword("Test"),Keyword("Test"),Keyword("Test"),Keyword("Test"),Keyword("Test"),Keyword("Test"),Keyword("Test"))
+            var initLocations : MutableList<Location> = mutableListOf(Location("Here"),Location("Anywhere"),Location("Helsinki"),Location("Stockholm"),Location("Kansas"),Location("Rovaniemi"),Location("Test"),Location("Test"),Location("Test"),Location("Test"),Location("Test"),Location("Test"),Location("Test"),Location("Test"),Location("Test"))
             var initUserList = UserList(initLocations,initKeywords)
             tempUserList = initUserList
         } else {

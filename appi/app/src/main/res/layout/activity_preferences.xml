@@ -21,14 +21,16 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/keywords_recyclerView"
-            android:layout_width="500px"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:scrollbars="vertical" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/locations_recyclerView"
-            android:layout_width="500px"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:scrollbars="vertical" />
 
     </LinearLayout>

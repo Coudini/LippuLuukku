@@ -4,20 +4,26 @@ import android.app.Activity
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import fi.tuni.lippuluukku.listModel.Keyword
 import fi.tuni.lippuluukku.listModel.Location
+import fi.tuni.lippuluukku.listModel.UserList
+
 class LocationRecyclerAdapter(val dataSet: MutableList<Location>?, val context: Activity) :
             RecyclerView.Adapter<LocationRecyclerAdapter.ViewHolder>() {
 
 
         class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val listItemName : TextView
+            val listItemButton : ImageButton
+            var attributesSet = false
             init {
                 listItemName = view.findViewById(R.id.list_item_name)
-
+                listItemButton = view.findViewById(R.id.list_item_button)
             }
         }
 
@@ -35,6 +41,29 @@ class LocationRecyclerAdapter(val dataSet: MutableList<Location>?, val context: 
             viewHolder.listItemName.text = dataSet!![position].name
             Log.d("test", "dataset size : ${dataSet?.size}")
 
+            if(!viewHolder.attributesSet) {
+                if (context is PreferencesActivity) {
+                    when (dataSet!![position].name) {
+                        "Here" -> viewHolder.listItemButton.visibility = INVISIBLE
+                        "Anywhere" -> viewHolder.listItemButton.visibility = INVISIBLE
+                        else -> { // Note the block
+                            viewHolder.listItemButton.setOnClickListener() {
+                                val util = Util()
+                                dataSet.removeAt(position)
+                                notifyItemRemoved(position)
+                                notifyItemRangeChanged(position, dataSet.size)
+                                util.saveUserData(context, UserList(dataSet, util.loadUserData(context)!!.keywords))
+                            }
+                        }
+                    }
+                } else if (context is MainActivity) {
+                    viewHolder.listItemButton.visibility = INVISIBLE
+                    viewHolder.listItemName.setOnClickListener(){
+                        context.setLocation(dataSet[position].name!!)
+                    }
+                }
+            }
+            viewHolder.attributesSet = true
 
         }
 

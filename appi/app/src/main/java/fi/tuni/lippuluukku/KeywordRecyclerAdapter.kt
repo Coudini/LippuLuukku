@@ -4,21 +4,25 @@ import android.app.Activity
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import fi.tuni.lippuluukku.listModel.Keyword
 import fi.tuni.lippuluukku.listModel.UserList
 
-class KeywordRecyclerAdapter(val dataSet: MutableList<Keyword>?, val context: Activity) :
+class KeywordRecyclerAdapter(val dataSet: MutableList<Keyword>?, val context: Activity, val preferences: Boolean) :
             RecyclerView.Adapter<KeywordRecyclerAdapter.ViewHolder>() {
 
 
         class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val listItemName : TextView
+            val listItemButton : ImageButton
+            var attributesSet = false
             init {
                 listItemName = view.findViewById(R.id.list_item_name)
-
+                listItemButton = view.findViewById(R.id.list_item_button)
             }
         }
 
@@ -32,36 +36,34 @@ class KeywordRecyclerAdapter(val dataSet: MutableList<Keyword>?, val context: Ac
 
 
         override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-            println(dataSet?.size)
+            println("KEYWORDRECYCLERADAPTER SIZE:"+ dataSet?.size + ", POSITION: " + position)
             viewHolder.listItemName.text = dataSet!![position].name
-            Log.d("test", "dataset size : ${dataSet?.size}")
+            Log.d("lol", "size: ${dataSet?.size}, position: ${position}")
 
-            viewHolder.listItemName.setOnClickListener(){
-                val util = Util()
-                var temp : UserList? = util.loadUserData(context)
+            if(!viewHolder.attributesSet) {
+                if (context is PreferencesActivity) {
+                    when (dataSet!![position].name) {
+                        "Anything" -> viewHolder.listItemButton.visibility = INVISIBLE
+                        else -> {
+                            viewHolder.listItemButton.setOnClickListener(){
+                                val util = Util()
+                                dataSet.removeAt(position)
+                                notifyItemRemoved(position)
+                                notifyItemRangeChanged(position, dataSet.size)
+                                util.saveUserData(context, UserList(util.loadUserData(context)!!.locations, dataSet))
+                            }
+                        }
+                    }
 
-                dataSet.removeAt(position)
-                notifyItemRemoved(position)
-                notifyItemRangeChanged(position,dataSet.size)
-
-                var test = util.loadUserData(context)
-                var newData = UserList(test?.locations,dataSet)
-                util.saveUserData(context,newData)
-                println("UserData after removal: " + util.loadUserData(context).toString())
-
-                /*
-                var testi = temp?.keywords?.remove(dataSet[position])
-                println("testitestifunkkari"+ testi.toString())
-
-
-                var filtered = util.loadUserData(context)?.keywords?.filter{it.name == dataSet[position].name}
-                println("testifunkkari: " + filtered.toString())
-                var newData = UserList(temp!!.locations, filtered as MutableList<Keyword>?)
-                println("NEWDATA AFTER CLICK: "+newData.toString())
-                //util.saveUserData(context,newData)
-*/
+                } else if (context is MainActivity) {
+                    viewHolder.listItemButton.visibility = INVISIBLE
+                    viewHolder.listItemName.setOnClickListener() {
+                        //context.keywordSelected = dataSet[position].name!!
+                        context.setKeyword(dataSet[position].name!!)
+                    }
+                }
             }
-
+            viewHolder.attributesSet = true
 
         }
 

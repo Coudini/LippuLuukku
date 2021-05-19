@@ -21,7 +21,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import fi.tuni.lippuluukku.listModel.UserList
 
+
+
 class PreferencesActivity : AppCompatActivity() {
+
+
 
     lateinit var testArray1 : Array<String>
     lateinit var testArray2 : Array<String>
@@ -43,12 +47,22 @@ class PreferencesActivity : AppCompatActivity() {
         }
         keywordsRecyclerView = findViewById(R.id.keywords_recyclerView)
         locationsRecyclerView = findViewById(R.id.locations_recyclerView)
+
+        keywordsRecyclerView.recycledViewPool.setMaxRecycledViews(0,1000)
+        locationsRecyclerView.setItemViewCacheSize(1000)
+
+        keywordsRecyclerView.recycledViewPool.setMaxRecycledViews(0,1000)
+        locationsRecyclerView.setItemViewCacheSize(1000)
+
         keywordsLinearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         locationsLinearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
         keywordsRecyclerView.layoutManager = keywordsLinearLayoutManager
         locationsRecyclerView.layoutManager = locationsLinearLayoutManager
 
-        keywordsRecyclerView.adapter = KeywordRecyclerAdapter(util.loadUserData(this)?.keywords, this)
+
+
+        keywordsRecyclerView.adapter = KeywordRecyclerAdapter(util.loadUserData(this)?.keywords, this, true)
         locationsRecyclerView.adapter = LocationRecyclerAdapter(util.loadUserData(this)?.locations, this)
 
 
@@ -61,6 +75,9 @@ class PreferencesActivity : AppCompatActivity() {
         animationDrawable.setEnterFadeDuration(2000)
         animationDrawable.setExitFadeDuration(4000)
         animationDrawable.start()
+    }
+    fun test () {
+        println("TESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTEST")
     }
     var util = Util()
 
