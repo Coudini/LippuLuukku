@@ -24,7 +24,6 @@
         android:layout_height="wrap_content"
         android:scrollbars="vertical" />
 
-
     <ImageView
         android:id="@+id/no_results_image"
         android:layout_width="0px"
@@ -48,7 +47,5 @@
         android:src="@drawable/banana"
         android:layout_gravity="center"
         android:layout_marginTop="180dp"/>
-
-
 
 </LinearLayout>

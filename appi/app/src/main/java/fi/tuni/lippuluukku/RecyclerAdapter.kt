@@ -23,12 +23,9 @@ import java.net.URL
 import kotlin.concurrent.thread
 
 
-//import androidx.recyclerview.widget.RecyclerView
-
 
 class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
         RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
-
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val topLayout : LinearLayout
@@ -45,6 +42,7 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
         val eventCart: ImageButton
         var eventImage: ImageView
         var eventPrice : TextView
+
         var attributesSet = false
         var showInfo = false
 
@@ -71,8 +69,6 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
         view.setBackgroundColor(0x00000000)
         return ViewHolder(view)
     }
-
-
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         println(dataSet?.size)
@@ -144,6 +140,7 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
 
             //load images
             thread{
+                //pick urls for smallest image for faster download speed
                 var smallestWidth = dataSet!![position].images!!.first()!!.width
                 var smallestIndex = 0
                 for (i in 0..dataSet!![position].images!!.count() - 1) {
@@ -152,6 +149,7 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
                         smallestIndex = i
                     }
                 }
+                //stream image data from url, decode into image and set on ImageView
                 val imageStream: InputStream = URL(dataSet!![position].images?.get(smallestIndex)?.url).getContent() as InputStream
                 val mirage = BitmapFactory.decodeStream(imageStream)
                 context.runOnUiThread(Runnable {
@@ -169,7 +167,5 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
         } else {
             return 0
         }
-
     }
 }
-

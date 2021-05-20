@@ -17,7 +17,6 @@ class Util {
     val apiKey = "wl5A0tEYNyQIQ9cTVA9VGVWlB3R8NgfO"
     val radius = 35
 
-
     fun getUrlWithGps(location: String, keyWord: String?):String{
         //gps & keyword
         if (keyWord != null) {
@@ -44,7 +43,6 @@ class Util {
         }
     }
 
-    var tempUserList: UserList? = null
     fun saveUserData(context: Activity, userList: UserList){
         val sharedPreferences: SharedPreferences = context.getSharedPreferences("userData", MODE_PRIVATE)
 
@@ -57,31 +55,24 @@ class Util {
         editor.putString("userData", json)
 
         editor.apply()
-
-        //Toast.makeText(context, "Saved data", Toast.LENGTH_SHORT).show()
-
     }
-    fun loadUserData(context: Activity) : UserList? {
 
+    fun loadUserData(context: Activity) : UserList? {
         val sharedPreferences: SharedPreferences = context.getSharedPreferences("userData", MODE_PRIVATE)
 
         val gson = Gson()
 
         val json = sharedPreferences.getString("userData", null)
-        Log.d("Shared Preferences", "SharedPreferences Json: "+json.toString())
 
-        tempUserList = gson.fromJson(json, UserList::class.java)
-
+        var tempUserList : UserList? = gson.fromJson(json, UserList::class.java)
 
         if (tempUserList == null) {
-            Log.d("Shared Preferences", "No user list found, creating a new one")
             var initKeywords : MutableList<Keyword> = mutableListOf(Keyword("Anything"),Keyword("Music"),Keyword("Art"),Keyword("Sports"))
             var initLocations : MutableList<Location> = mutableListOf(Location("Here"),Location("Anywhere"),Location("Helsinki"))
             var initUserList = UserList(initLocations,initKeywords)
             tempUserList = initUserList
-        } else {
-            Log.d("Shared Preferences", "User list found: ${tempUserList.toString()}")
         }
+
         return tempUserList
     }
 }
