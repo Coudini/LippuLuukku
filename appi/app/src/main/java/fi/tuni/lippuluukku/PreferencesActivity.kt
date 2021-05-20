@@ -24,17 +24,15 @@ import fi.tuni.lippuluukku.listModel.UserList
 
 class PreferencesActivity : AppCompatActivity() {
 
-
-
-    lateinit var testArray1 : Array<String>
-    lateinit var testArray2 : Array<String>
     lateinit var keywordsRecyclerView : RecyclerView
     lateinit var locationsRecyclerView : RecyclerView
+
     lateinit var keywordsLinearLayoutManager : LinearLayoutManager
     lateinit var locationsLinearLayoutManager : LinearLayoutManager
 
     lateinit var editKeyword : EditText
     lateinit var editLocation : EditText
+
     lateinit var addKeyword : ImageButton
     lateinit var addLocation : ImageButton
 
@@ -45,21 +43,10 @@ class PreferencesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_preferences)
 
-        val extras = intent.extras
-        if(extras != null) {
-            testArray1 = extras.getStringArray("locationsArray")!!
-            testArray2 = extras.getStringArray("keywordsArray")!!
-            Log.d("extras", testArray1?.count().toString())
-            Log.d("extras", testArray2?.count().toString())
-        }
+        animateBackground()
+
         keywordsRecyclerView = findViewById(R.id.keywords_recyclerView)
         locationsRecyclerView = findViewById(R.id.locations_recyclerView)
-
-        keywordsRecyclerView.recycledViewPool.setMaxRecycledViews(0,1000)
-        locationsRecyclerView.setItemViewCacheSize(1000)
-
-        keywordsRecyclerView.recycledViewPool.setMaxRecycledViews(0,1000)
-        locationsRecyclerView.setItemViewCacheSize(1000)
 
         keywordsLinearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         locationsLinearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -67,40 +54,32 @@ class PreferencesActivity : AppCompatActivity() {
         keywordsRecyclerView.layoutManager = keywordsLinearLayoutManager
         locationsRecyclerView.layoutManager = locationsLinearLayoutManager
 
-
-
         keywordsRecyclerView.adapter = KeywordRecyclerAdapter(util.loadUserData(this)?.keywords, this)
         locationsRecyclerView.adapter = LocationRecyclerAdapter(util.loadUserData(this)?.locations, this)
 
         editKeyword = findViewById(R.id.preferences_add_keyword)
         editLocation = findViewById(R.id.preferences_add_location)
+
         addKeyword = findViewById(R.id.preferences_add_keyword_button)
         addLocation = findViewById(R.id.preferences_add_location_button)
 
         editKeyword.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {}
-
             override fun beforeTextChanged(s: CharSequence, start: Int,
                                            count: Int, after: Int) {
             }
-
             override fun onTextChanged(s: CharSequence, start: Int,
                                        before: Int, count: Int) {
-                //setLocation(s.toString())
                 keyword = s.toString()
             }
         })
-
         editLocation.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {}
-
             override fun beforeTextChanged(s: CharSequence, start: Int,
                                            count: Int, after: Int) {
             }
-
             override fun onTextChanged(s: CharSequence, start: Int,
                                        before: Int, count: Int) {
-                //setLocation(s.toString())
                 location = s.toString()
             }
         })
@@ -127,9 +106,8 @@ class PreferencesActivity : AppCompatActivity() {
             }
         }
 
-        animateBackground()
-        //testLoad()
     }
+
     fun animateBackground(){
         val linearLayout : LinearLayout = findViewById(R.id.layout)
         val animationDrawable : AnimationDrawable = linearLayout.getBackground() as AnimationDrawable
@@ -137,25 +115,12 @@ class PreferencesActivity : AppCompatActivity() {
         animationDrawable.setExitFadeDuration(4000)
         animationDrawable.start()
     }
-    fun test () {
-        println("TESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTEST")
-    }
+
     var util = Util()
 
-    fun testSave (ul: UserList) {
-        util.saveUserData(this, ul)
-    }
-    fun testLoad () {
-        val tempArray = util.loadUserData(this)
-        println(tempArray)
-        //testSave(tempArray!!)
-    }
     override fun onBackPressed() {
         Toast.makeText(this,"Data saved",Toast.LENGTH_SHORT).show()
-        val intent = Intent()
-        //val temp = util.loadUserData(this)
-        //intent.putExtra("second","secondTest")
-        setResult(RESULT_OK, intent)
+        setResult(RESULT_OK, Intent())
         super.onBackPressed()
     }
 }
