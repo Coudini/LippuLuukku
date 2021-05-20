@@ -39,24 +39,19 @@ class ResultsActivity : AppCompatActivity() {
     lateinit var recyclerView : RecyclerView
     lateinit var linearLayoutManager : LinearLayoutManager
 
-
-
     var extras : Bundle? = null
 
-    //var res: MutableList<ResponseData>? = null
-
-    fun testFunc (button: View) {
-        //this.dataTest.text = "firstName: ${results.events?.get(2)?.name}, size: ${results.events?.count()}"
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_results)
+
         animateBackground()
 
         extras = intent.extras
         if(extras != null) {
             url = extras!!.getString("url").toString()
         }
+
         loadingAnimation = findViewById(R.id.loading_image)
         resultStatus = findViewById(R.id.result_status)
         resultImage = findViewById(R.id.no_results_image)
@@ -66,9 +61,7 @@ class ResultsActivity : AppCompatActivity() {
 
         thread {
             val rotation = AnimationUtils.loadAnimation(this, R.anim.rotation)
- //           rotation.fillAfter = true
             loadingAnimation.startAnimation(rotation)
-            //Glide.with(this).load(R.drawable.giphy).into(imageView)
         }
     }
 
@@ -88,24 +81,17 @@ class ResultsActivity : AppCompatActivity() {
     }
 
     fun urlFunc(url: String){
+
         downloadUrlAsync(this, url){
-
-
-        /*
-            val mp = ObjectMapper()
-            val myObject: ResponseDataHolder = mp.readValue(it, ResponseDataHolder::class.java)
-            recyclerView.recycledViewPool.setMaxRecycledViews(0,100)
-            recyclerView.setItemViewCacheSize(100)
-            recyclerView.adapter = RecyclerAdapter(myObject._embedded?.events, this)
-         */
 
             val jsonData = JSONObject(it)
             val gson = Gson()
             val responseResults = gson.fromJson(jsonData.toString(), ResponseDataHolder::class.java)
+
+            // Stop result-images from popping while scrolling list
             recyclerView.recycledViewPool.setMaxRecycledViews(0,1000)
             recyclerView.setItemViewCacheSize(1000)
             recyclerView.adapter = RecyclerAdapter(responseResults._embedded?.events, this)
-            println("results not found: " + responseResults._embedded?.events?.first())
 
             var params : LinearLayout.LayoutParams = loadingAnimation.layoutParams as LinearLayout.LayoutParams
             params.height = 0
@@ -125,11 +111,9 @@ class ResultsActivity : AppCompatActivity() {
         }
     }
 
-
     fun downloadUrlAsync(context: Activity, url:String, callback:(result:String?)->Unit):Unit{
         thread{
             var data = getUrl(url)
-            //var data = getUrl("https://app.ticketmaster.com/discovery/v2/events?apikey=wl5A0tEYNyQIQ9cTVA9VGVWlB3R8NgfO&locale=*&page=0&city=helsinki&size=100")
             context.runOnUiThread{
                 callback(data)
             }
