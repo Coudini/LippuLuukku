@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
     lateinit var preferencesButton : ImageButton
     lateinit var searchButton : ImageButton
 
-
     lateinit var editKeyword : EditText
     lateinit var editLocation : EditText
     lateinit var locationSelected : String
@@ -40,22 +39,18 @@ class MainActivity : AppCompatActivity(), LocationListener {
     lateinit var keywordsLinearLayoutManager : LinearLayoutManager
     lateinit var locationsLinearLayoutManager : LinearLayoutManager
 
-
     var lat = 0.0
     var lon = 0.0
     var latlonString : String = "${lat},${lon}"
 
     var util = Util()
 
-
-
-
     override fun onLocationChanged(location: Location) {
         lat = location.latitude
         lon = location.longitude
         latlonString = "${lat},${lon}"
-
     }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (requestCode == locationPermissionCode) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -66,24 +61,26 @@ class MainActivity : AppCompatActivity(), LocationListener {
             }
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         getLocation()
 
         animateBackground()
 
         keywordsRecyclerView = findViewById(R.id.keywords_recyclerView)
         locationsRecyclerView = findViewById(R.id.locations_recyclerView)
+
         keywordsLinearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         locationsLinearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
         keywordsRecyclerView.layoutManager = keywordsLinearLayoutManager
         locationsRecyclerView.layoutManager = locationsLinearLayoutManager
 
         keywordsRecyclerView.adapter = KeywordRecyclerAdapter(util.loadUserData(this)?.keywords, this)
         locationsRecyclerView.adapter = LocationRecyclerAdapter(util.loadUserData(this)?.locations, this)
-
-
 
         this.editKeyword = findViewById(R.id.editKeyword)
         this.editKeyword.addTextChangedListener(object : TextWatcher {
@@ -96,11 +93,10 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
             override fun onTextChanged(s: CharSequence, start: Int,
                                        before: Int, count: Int) {
-                //s
-                //setKeyword(s.toString())
                 keywordSelected = s.toString()
             }
         })
+
         this.editLocation = findViewById(R.id.editLocation)
         this.editLocation.addTextChangedListener(object : TextWatcher {
 
@@ -112,18 +108,12 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
             override fun onTextChanged(s: CharSequence, start: Int,
                                        before: Int, count: Int) {
-                //setLocation(s.toString())
                 locationSelected = s.toString()
             }
         })
 
-
         setLocation(util.loadUserData(this)?.locations?.first()?.name!!)
         setKeyword(util.loadUserData(this)?.keywords?.first()?.name!!)
-
-
-
-
 
         this.preferencesButton = findViewById(R.id.imageButtonPreferences)
         this.preferencesButton.setOnClickListener(){
@@ -134,8 +124,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
         this.searchButton.setOnClickListener(){
             this.searchOnClick(this.searchButton)
         }
-
-
     }
 
     override fun onResume() {
@@ -146,11 +134,10 @@ class MainActivity : AppCompatActivity(), LocationListener {
     }
 
     fun getLocation () {
-        Log.d("test", "getLocation()")
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCode)
-        } else {Log.d("test", "fail")}
+        }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5f, this)
     }
 
@@ -164,47 +151,46 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
     private fun preferencesOnClick(button: View){
         val preferencesIntent = Intent(this, PreferencesActivity::class.java)
-//        preferencesIntent.putExtra("locationsArray", this.locationsArray)
-//        preferencesIntent.putExtra("keywordsArray", this.keywordsArray)
         startActivityForResult(preferencesIntent, 1)
     }
 
     private fun searchOnClick(button: View) {
         val resultsIntent = Intent(this, ResultsActivity::class.java)
-        //resultsIntent.putExtra("searchUrl", this.url1)
+
         var invalidParameters = false
         var tempUrl = ""
-        // Dont use gps
-        if (this.locationSelected != "Here" && this.locationSelected != "Anywhere") {
-            if (this.keywordSelected != "Anything") {
-                tempUrl = util.getUrl(locationSelected, keywordSelected)
-            } else {
-                tempUrl = util.getUrl(locationSelected, null)
-            }
-            // Use gps
-        } else if (this.locationSelected == "Here") {
-            if (this.keywordSelected != "Anything") {
-                tempUrl = util.getUrlWithGps(latlonString, keywordSelected)
-            } else {
-                tempUrl = util.getUrlWithGps(latlonString, null)
-            }
-        } else if (this.locationSelected == "Anywhere") {
-            if (this.keywordSelected != "Anything") {
-                tempUrl = util.getUrl(null, keywordSelected)
-            } else {
-                invalidParameters = true
-                val toast = Toast.makeText(getApplicationContext(),
-                        "No search parameters",
-                        Toast.LENGTH_SHORT)
-                toast.show()
-            }
+        var tempLoc : String?
+        var tempKey : String?
+
+        when (locationSelected) {
+            "Here" -> tempLoc = latlonString
+            "Anywhere" -> tempLoc = null
+            "" -> tempLoc = null
+            else -> tempLoc = locationSelected
         }
 
-        //test
+        when (keywordSelected) {
+            "Anything" -> tempKey = null
+            "" -> tempKey = null
+            else -> tempKey = keywordSelected
+        }
+
+        when (tempLoc) {
+            null -> when (tempKey) {
+                null -> invalidParameters = true
+                else -> tempUrl = util.getUrl(tempLoc, tempKey)
+            }
+            latlonString -> tempUrl = util.getUrlWithGps(tempLoc,tempKey)
+            else -> tempUrl = util.getUrl(tempLoc,tempKey)
+        }
+
         if (!invalidParameters) {
             resultsIntent.putExtra("url", tempUrl)
-            Log.d("test", tempUrl)
             startActivity(resultsIntent)
+        } else {
+            Toast.makeText(this,
+                    "No search parameters",
+                    Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -212,6 +198,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
         locationSelected = location
         editLocation.setText(location)
     }
+
     fun setKeyword(keyword: String){
         keywordSelected = keyword
         editKeyword.setText(keyword)
@@ -219,7 +206,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        //preferences
+
+        // requestCode 1 = PreferencesActivity
         if(requestCode == 1) {
             if(resultCode == RESULT_OK) {
                 val temp = util.loadUserData(this)
