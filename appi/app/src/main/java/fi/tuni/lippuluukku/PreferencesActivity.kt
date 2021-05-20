@@ -1,26 +1,17 @@
 package fi.tuni.lippuluukku
 
-import android.Manifest
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import fi.tuni.lippuluukku.listModel.Keyword
 import fi.tuni.lippuluukku.listModel.Location
 import fi.tuni.lippuluukku.listModel.UserList
-
-
 
 class PreferencesActivity : AppCompatActivity() {
 

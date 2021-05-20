@@ -1,8 +1,6 @@
 package fi.tuni.lippuluukku
 
 import android.app.Activity
-import android.text.Layout
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -12,7 +10,6 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import fi.tuni.lippuluukku.listModel.Keyword
 import fi.tuni.lippuluukku.listModel.Location
 import fi.tuni.lippuluukku.listModel.UserList
 

@@ -3,10 +3,7 @@ package fi.tuni.lippuluukku
 import android.app.Activity
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import android.util.Log
-import android.widget.Toast
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import fi.tuni.lippuluukku.listModel.Keyword
 import fi.tuni.lippuluukku.listModel.Location
 import fi.tuni.lippuluukku.listModel.UserList

@@ -1,32 +1,24 @@
 package fi.tuni.lippuluukku
 
 import android.app.Activity
-import android.content.Intent
-import android.graphics.BitmapFactory
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.view.animation.AnimationUtils
-import android.view.animation.LinearInterpolator
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.fasterxml.jackson.databind.ObjectMapper
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 import kotlin.concurrent.thread
 import org.json.JSONObject
-
-import fi.tuni.lippuluukku.model.ResponseData
 import com.google.gson.Gson
 import fi.tuni.lippuluukku.model.ResponseDataHolder
-import java.io.InputStream
 
 class ResultsActivity : AppCompatActivity() {
 
