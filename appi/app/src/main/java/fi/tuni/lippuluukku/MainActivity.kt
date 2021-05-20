@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
         keywordsRecyclerView.layoutManager = keywordsLinearLayoutManager
         locationsRecyclerView.layoutManager = locationsLinearLayoutManager
 
-        keywordsRecyclerView.adapter = KeywordRecyclerAdapter(util.loadUserData(this)?.keywords, this, true)
+        keywordsRecyclerView.adapter = KeywordRecyclerAdapter(util.loadUserData(this)?.keywords, this)
         locationsRecyclerView.adapter = LocationRecyclerAdapter(util.loadUserData(this)?.locations, this)
 
 
@@ -226,7 +226,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 getLocation()
                 setLocation(temp?.locations?.first()?.name!!)
                 setKeyword(temp?.keywords?.first()?.name!!)
-                keywordsRecyclerView.adapter = KeywordRecyclerAdapter(temp?.keywords, this, true)
+                keywordsRecyclerView.adapter = KeywordRecyclerAdapter(temp?.keywords, this)
                 locationsRecyclerView.adapter = LocationRecyclerAdapter(temp?.locations, this)
             }
         }

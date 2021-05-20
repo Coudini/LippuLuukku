@@ -34,7 +34,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:fontFamily="@font/bellbottom"
+                            android:textSize="20dp"
                             android:ellipsize="end"/>
                         <TextView
                             android:id="@+id/event_type"
@@ -65,11 +65,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:gravity="center"
                 android:orientation="vertical">
                 <ImageButton
                     android:id="@+id/event_map"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:minWidth="60dp"
+                    android:minHeight="60dp"
+                    android:scaleType="fitXY"
                     android:background="@android:color/transparent"
                     app:srcCompat="@android:drawable/ic_menu_mapmode"
                     android:tint="#FFD700"/>
@@ -98,11 +102,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:orientation="vertical">
                 <ImageButton
                     android:id="@+id/event_cart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:minWidth="60dp"
+                    android:minHeight="60dp"
+                    android:scaleType="fitXY"
                     android:background="@android:color/transparent"
                     app:srcCompat="@drawable/cart"
                     android:tint="#FFD700"/>

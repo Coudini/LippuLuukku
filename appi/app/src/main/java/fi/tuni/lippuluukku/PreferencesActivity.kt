@@ -69,7 +69,7 @@ class PreferencesActivity : AppCompatActivity() {
 
 
 
-        keywordsRecyclerView.adapter = KeywordRecyclerAdapter(util.loadUserData(this)?.keywords, this, true)
+        keywordsRecyclerView.adapter = KeywordRecyclerAdapter(util.loadUserData(this)?.keywords, this)
         locationsRecyclerView.adapter = LocationRecyclerAdapter(util.loadUserData(this)?.locations, this)
 
         editKeyword = findViewById(R.id.preferences_add_keyword)
@@ -110,7 +110,7 @@ class PreferencesActivity : AppCompatActivity() {
                 var tempArray = util.loadUserData(this)
                 tempArray?.keywords?.add(Keyword((keyword)))
                 util.saveUserData(this,UserList(tempArray?.locations,tempArray?.keywords))
-                keywordsRecyclerView.adapter = KeywordRecyclerAdapter(util.loadUserData(this)?.keywords, this, true)
+                keywordsRecyclerView.adapter = KeywordRecyclerAdapter(util.loadUserData(this)?.keywords, this)
             } else {
                 Toast.makeText(this, "No info provided", Toast.LENGTH_SHORT).show()
             }

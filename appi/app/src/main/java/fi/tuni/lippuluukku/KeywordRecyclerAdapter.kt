@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import fi.tuni.lippuluukku.listModel.Keyword
 import fi.tuni.lippuluukku.listModel.UserList
 
-class KeywordRecyclerAdapter(val dataSet: MutableList<Keyword>?, val context: Activity, val preferences: Boolean) :
+class KeywordRecyclerAdapter(val dataSet: MutableList<Keyword>?, val context: Activity) :
             RecyclerView.Adapter<KeywordRecyclerAdapter.ViewHolder>() {
 
 
