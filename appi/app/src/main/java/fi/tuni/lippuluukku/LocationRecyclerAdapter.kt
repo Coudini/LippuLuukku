@@ -31,7 +31,7 @@ class LocationRecyclerAdapter(val dataSet: MutableList<Location>?, val context: 
         override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
             val view = LayoutInflater.from(viewGroup.context)
                     .inflate(R.layout.list_item, viewGroup, false)
-            view.setBackgroundColor(0x26000000)
+            view.setBackgroundColor(0x0D000000)
             return ViewHolder(view)
         }
 

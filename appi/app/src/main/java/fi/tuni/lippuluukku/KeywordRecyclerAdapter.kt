@@ -32,7 +32,7 @@ class KeywordRecyclerAdapter(val dataSet: MutableList<Keyword>?, val context: Ac
         override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
             val view = LayoutInflater.from(viewGroup.context)
                     .inflate(R.layout.list_item, viewGroup, false)
-            view.setBackgroundColor(0x26000000)
+            view.setBackgroundColor(0x0D000000)
             return ViewHolder(view)
         }
 

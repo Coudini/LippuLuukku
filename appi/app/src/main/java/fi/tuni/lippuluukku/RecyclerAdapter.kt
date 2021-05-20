@@ -68,7 +68,7 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
                 .inflate(R.layout.event_item, viewGroup, false)
-        view.setBackgroundColor(0x26000000)
+        view.setBackgroundColor(0x00000000)
         return ViewHolder(view)
     }
 
