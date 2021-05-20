@@ -8,11 +8,15 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="LipPULUUKKU"
-        android:fontFamily="@font/dura"
-        android:textColor="#BF26d4a0"
-        android:textSize="40dp"
+        android:layout_height="100dp"
+        android:text="LippuLuukku"
+        android:fontFamily="@font/albas"
+        android:lines="1"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="30sp"
+        android:autoSizeMaxTextSize="200sp"
+        android:autoSizeStepGranularity="1sp"
+        android:textColor="#135058"
         android:gravity="center"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

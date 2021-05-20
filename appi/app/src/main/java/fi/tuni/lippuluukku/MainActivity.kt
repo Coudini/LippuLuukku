@@ -232,14 +232,12 @@ class MainActivity : AppCompatActivity(), LocationListener {
         //preferences
         if(requestCode == 1) {
             if(resultCode == RESULT_OK) {
-                val tempLocations = data?.extras?.getStringArray("locationsArray")
-                if (tempLocations != null) {
-  //                  this.locationsArray = tempLocations
-                }
-                val tempKeywords = data?.extras?.getStringArray("keywordsArray")
-                if (tempKeywords != null) {
-    //                this.keywordsArray = tempKeywords
-                }
+                val temp = util.loadUserData(this)
+                getLocation()
+                setLocation(temp?.locations?.first()?.name!!)
+                setKeyword(temp?.keywords?.first()?.name!!)
+                keywordsRecyclerView.adapter = KeywordRecyclerAdapter(temp?.keywords, this, true)
+                locationsRecyclerView.adapter = LocationRecyclerAdapter(temp?.locations, this)
             }
         }
     }

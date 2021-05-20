@@ -151,8 +151,10 @@ class PreferencesActivity : AppCompatActivity() {
         //testSave(tempArray!!)
     }
     override fun onBackPressed() {
+        Toast.makeText(this,"Data saved",Toast.LENGTH_SHORT).show()
         val intent = Intent()
-        intent.putExtra("second","secondTest")
+        //val temp = util.loadUserData(this)
+        //intent.putExtra("second","secondTest")
         setResult(RESULT_OK, intent)
         super.onBackPressed()
     }

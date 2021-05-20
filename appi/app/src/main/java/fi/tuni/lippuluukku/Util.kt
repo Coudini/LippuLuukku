@@ -58,7 +58,7 @@ class Util {
 
         editor.apply()
 
-        Toast.makeText(context, "Saved data", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(context, "Saved data", Toast.LENGTH_SHORT).show()
 
     }
     fun loadUserData(context: Activity) : UserList? {
