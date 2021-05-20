@@ -48,10 +48,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
     var util = Util()
 
 
-    //Test-strings
-    lateinit var gpsTest : TextView
-    lateinit var locationTest : TextView
-    lateinit var keywordTest : TextView
 
 
     override fun onLocationChanged(location: Location) {
@@ -59,8 +55,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
         lon = location.longitude
         latlonString = "${lat},${lon}"
 
-        //test
-        gpsTest.text = latlonString
     }
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (requestCode == locationPermissionCode) {
@@ -127,10 +121,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
         setLocation(util.loadUserData(this)?.locations?.first()?.name!!)
         setKeyword(util.loadUserData(this)?.keywords?.first()?.name!!)
 
-        //Test strings
-        this.gpsTest = findViewById(R.id.gpsTest)
-        this.locationTest = findViewById(R.id.locationTest)
-        this.keywordTest = findViewById(R.id.keywordTest)
 
 
 

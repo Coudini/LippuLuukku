@@ -29,13 +29,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#26000000">
+        android:background="#4D000000">
+
 
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal|center_vertical"
+            android:fontFamily="@font/riesling"
+            android:textSize="30dp"
             android:text="Find "/>
 
 
@@ -51,7 +54,9 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal|center_vertical"
-            android:text=" in "/>
+            android:text=" in "
+            android:fontFamily="@font/riesling"
+            android:textSize="30dp"/>
 
         <EditText
             android:id="@+id/editLocation"
@@ -88,29 +93,6 @@
             android:layout_weight="1"
             android:scrollbars="vertical" />
     </LinearLayout>
-
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="gpsTest"
-        android:id="@+id/gpsTest"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="locationTest"
-        android:id="@+id/locationTest"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="keywordTest"
-        android:id="@+id/keywordTest"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="urlTest"
-        android:id="@+id/urlTest"/>
 
 
 
