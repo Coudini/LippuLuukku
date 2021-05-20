@@ -1,6 +1,7 @@
 package fi.tuni.lippuluukku
 
 import android.app.Activity
+import android.text.Layout
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import fi.tuni.lippuluukku.listModel.Keyword
@@ -21,10 +23,11 @@ class LocationRecyclerAdapter(val dataSet: MutableList<Location>?, val context: 
         class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val listItemName : TextView
             val listItemButton : ImageButton
-            var attributesSet = false
+            val listLayout : LinearLayout
             init {
                 listItemName = view.findViewById(R.id.list_item_name)
                 listItemButton = view.findViewById(R.id.list_item_button)
+                listLayout = view.findViewById(R.id.list_item_layout)
             }
         }
 
@@ -43,7 +46,6 @@ class LocationRecyclerAdapter(val dataSet: MutableList<Location>?, val context: 
             viewHolder.listItemName.text = dataSet!![position].name
             //Log.d("test", "dataset size : ${dataSet?.size}")
 
-            //if(!viewHolder.attributesSet) {
                 if (context is PreferencesActivity) {
                     when (actualPosition!!.name) {
                         "Here" -> viewHolder.listItemButton.visibility = INVISIBLE
@@ -61,12 +63,11 @@ class LocationRecyclerAdapter(val dataSet: MutableList<Location>?, val context: 
                     }
                 } else if (context is MainActivity) {
                     viewHolder.listItemButton.visibility = GONE
-                    viewHolder.listItemName.setOnClickListener(){
+
+                    viewHolder.listLayout.setOnClickListener() {
                         context.setLocation(dataSet[viewHolder.layoutPosition].name!!)
                     }
                 }
-            //}
-            //viewHolder.attributesSet = true
 
         }
 

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import fi.tuni.lippuluukku.listModel.Keyword
@@ -21,11 +22,11 @@ class KeywordRecyclerAdapter(val dataSet: MutableList<Keyword>?, val context: Ac
         class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val listItemName : TextView
             val listItemButton : ImageButton
-            var attributesSet = false
-            var pos = -1
+            val listLayout : LinearLayout
             init {
                 listItemName = view.findViewById(R.id.list_item_name)
                 listItemButton = view.findViewById(R.id.list_item_button)
+                listLayout = view.findViewById(R.id.list_item_layout)
             }
         }
 
@@ -41,9 +42,7 @@ class KeywordRecyclerAdapter(val dataSet: MutableList<Keyword>?, val context: Ac
             val actualPosition = dataSet?.get(viewHolder.layoutPosition)
             //println("KEYWORDRECYCLERADAPTER SIZE:" + dataSet?.size + ", POSITION: " + position + ", ADAPTERPOSITION: " + viewHolder.adapterPosition)
             viewHolder.listItemName.setText(dataSet!![position].name)// = dataSet!![position].name
-            //Log.d("lol", "size: ${dataSet?.size}, position: ${position}")
 
-            //if(!viewHolder.attributesSet) {
                 if (context is PreferencesActivity) {
                     when (actualPosition!!.name) {
 
@@ -66,9 +65,9 @@ class KeywordRecyclerAdapter(val dataSet: MutableList<Keyword>?, val context: Ac
 
                 } else if (context is MainActivity) {
                     viewHolder.listItemButton.visibility = GONE
-                    viewHolder.listItemName.setOnClickListener() {
-                        //context.keywordSelected = dataSet[position].name!!
-                        context.setKeyword(dataSet!![viewHolder.layoutPosition].name!!)
+
+                    viewHolder.listLayout.setOnClickListener() {
+                        context.setKeyword(dataSet[viewHolder.layoutPosition].name!!)
                     }
                 }
             }
