@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
     var lon = 0.0
     var latlonString : String = "${lat},${lon}"
 
+    //Util class holding helper functions for getting urls and manipulating data on User device
     var util = Util()
 
     override fun onLocationChanged(location: Location) {
@@ -140,6 +141,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5f, this)
     }
 
+    //Sets up and starts the background animation
     private fun animateBackground(){
         val linearLayout : LinearLayout = findViewById(R.id.layout)
         val animationDrawable : AnimationDrawable = linearLayout.getBackground() as AnimationDrawable
@@ -208,11 +210,15 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
         // requestCode 1 = PreferencesActivity
         if(requestCode == 1) {
+
+            // When returning from PreferencesActivity updates the UserList class holding lists for Keywords and Locations
             if(resultCode == RESULT_OK) {
                 val temp = util.loadUserData(this)
-                getLocation()
-                setLocation(temp?.locations?.first()?.name!!)
-                setKeyword(temp?.keywords?.first()?.name!!)
+                //getLocation()
+                //setLocation(temp?.locations?.first()?.name!!)
+                //setKeyword(temp?.keywords?.first()?.name!!)
+
+                // Updates the lists with reloaded data
                 keywordsRecyclerView.adapter = KeywordRecyclerAdapter(temp?.keywords, this)
                 locationsRecyclerView.adapter = LocationRecyclerAdapter(temp?.locations, this)
             }

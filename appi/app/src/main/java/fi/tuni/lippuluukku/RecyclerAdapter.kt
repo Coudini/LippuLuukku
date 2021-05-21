@@ -1,11 +1,9 @@
 package fi.tuni.lippuluukku
 
-
 import android.app.Activity
 import android.content.Intent
 import android.graphics.*
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,11 +19,11 @@ import java.io.InputStream
 import java.net.URL
 import kotlin.concurrent.thread
 
-
-
+//Adapter for RecyclerView listing Events from Event data-class
 class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
         RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
+    // Introduce all the needed variables
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val topLayout : LinearLayout
         val bottomLayout : LinearLayout
@@ -62,6 +60,7 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
         }
     }
 
+    // Set backgrounds for all the views and return a ViewHolder for them
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
                 .inflate(R.layout.event_item, viewGroup, false)
@@ -69,11 +68,11 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
         return ViewHolder(view)
     }
 
+    // Set up all the attributes for each View
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        println(dataSet?.size)
-        Log.d("test", "dataset size : ${dataSet?.size}")
 
-        //set up values only on first call of this function
+        //Set up values only on first call of this function (attributesSet Boolean)
+        //No need for re-sets because list will not be modified
         if (!viewHolder.attributesSet) {
             // set name
             viewHolder.eventName.text = dataSet!![position].name
@@ -94,6 +93,7 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
             viewHolder.eventTime.text = dataSet!![position].dates?.start?.localTime
 
             // set price shown
+            // some String modification based on if Min and/or/not Max values are found
             if (dataSet[position].priceRanges?.first()?.min != null && dataSet[position].priceRanges?.first()?.max != null) {
                 if (dataSet!![position].priceRanges?.first()?.min == dataSet!![position].priceRanges?.first()?.max) {
                     viewHolder.eventPrice.text = "${dataSet!![position].priceRanges?.first()?.max}\n${dataSet!![position].priceRanges?.first()?.currency}"
@@ -106,8 +106,9 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
                 viewHolder.eventPrice.text = "${dataSet!![position].priceRanges?.first()?.max}\n${dataSet!![position].priceRanges?.first()?.currency}"
             }
 
-            //set dropdown actions for top layout on views
+            //set dropdown(show or hide another layout) actions for top layout on views
             viewHolder.topLayout.setOnClickListener(){
+                //Programmatically some parameters can only be accessed through LayoutParams
                 val params: LayoutParams = viewHolder.bottomLayout.layoutParams as LayoutParams
                 if (viewHolder.showInfo) {
                     viewHolder.bottomLayout.visibility = View.INVISIBLE
@@ -123,23 +124,25 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
                 }
             }
 
-            //set function when clicking the shopping cart ImageButton
+            //Set function when clicking the shopping cart ImageButton
+            //Opens browser with url directing to tickets sales
             viewHolder.eventCart.setOnClickListener() {
                 val uri = Uri.parse(dataSet!![position].url)
                 val intent = Intent(Intent.ACTION_VIEW, uri)
                 context.startActivity(intent)
             }
 
-            //set function when clicking the map ImageButton
+            //Set function when clicking the map ImageButton
+            //Opens GoogleMaps on event venue coordinates
             viewHolder.eventMap.setOnClickListener() {
                 val uri = Uri.parse("geo:${dataSet[position]._embedded?.venues?.first()?.location?.latitude},${dataSet[position]._embedded?.venues?.first()?.location?.longitude}")
                 val intent = Intent(Intent.ACTION_VIEW, uri)
                 context.startActivity(intent)
             }
 
-            //load images
+            //Load images on seperate Thread to prevent app freezing
             thread{
-                //pick urls for smallest image for faster download speed
+                //Choose urls for smallest image for faster download speed
                 var smallestWidth = dataSet!![position].images!!.first()!!.width
                 var smallestIndex = 0
                 for (i in 0..dataSet!![position].images!!.count() - 1) {
@@ -160,6 +163,7 @@ class RecyclerAdapter(val dataSet: MutableList<Event>?, val context: Activity) :
         }
     }
 
+    //Returns 0 if dataSet is null
     override fun getItemCount() : Int {
         if (dataSet != null) {
             return dataSet.size

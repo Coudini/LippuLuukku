@@ -13,6 +13,7 @@ import fi.tuni.lippuluukku.listModel.Keyword
 import fi.tuni.lippuluukku.listModel.Location
 import fi.tuni.lippuluukku.listModel.UserList
 
+// Handles list editing for lists found in UserList data-class
 class PreferencesActivity : AppCompatActivity() {
 
     lateinit var keywordsRecyclerView : RecyclerView
@@ -30,21 +31,24 @@ class PreferencesActivity : AppCompatActivity() {
     var keyword : String? = null
     var location : String? = null
 
+    // Sets up everyting needed for all the functions in this class
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_preferences)
 
+        // Animate background
         animateBackground()
 
         keywordsRecyclerView = findViewById(R.id.keywords_recyclerView)
         locationsRecyclerView = findViewById(R.id.locations_recyclerView)
 
+        // Set up layouts for RecyclerViews
         keywordsLinearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         locationsLinearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-
         keywordsRecyclerView.layoutManager = keywordsLinearLayoutManager
         locationsRecyclerView.layoutManager = locationsLinearLayoutManager
 
+        // Set up keywords and locations RecyclerViews
         keywordsRecyclerView.adapter = KeywordRecyclerAdapter(util.loadUserData(this)?.keywords, this)
         locationsRecyclerView.adapter = LocationRecyclerAdapter(util.loadUserData(this)?.locations, this)
 
@@ -54,6 +58,7 @@ class PreferencesActivity : AppCompatActivity() {
         addKeyword = findViewById(R.id.preferences_add_keyword_button)
         addLocation = findViewById(R.id.preferences_add_location_button)
 
+        // Add listeners to EditTexts for adding new values for tracking state of arguments to be added to lists
         editKeyword.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {}
             override fun beforeTextChanged(s: CharSequence, start: Int,
@@ -75,6 +80,7 @@ class PreferencesActivity : AppCompatActivity() {
             }
         })
 
+        // Add onClickListeners to buttons for adding Locations and Keywords lists
         addKeyword.setOnClickListener(){
             if(keyword!=null && keyword.toString().length > 0){
                 var tempArray = util.loadUserData(this)
@@ -85,7 +91,6 @@ class PreferencesActivity : AppCompatActivity() {
                 Toast.makeText(this, "No info provided", Toast.LENGTH_SHORT).show()
             }
         }
-
         addLocation.setOnClickListener(){
             if(location!=null && location.toString().length > 0){
                 var tempArray = util.loadUserData(this)
@@ -96,9 +101,9 @@ class PreferencesActivity : AppCompatActivity() {
                 Toast.makeText(this, "No info provided", Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 
+    //Sets up and starts the background animation
     fun animateBackground(){
         val linearLayout : LinearLayout = findViewById(R.id.layout)
         val animationDrawable : AnimationDrawable = linearLayout.getBackground() as AnimationDrawable
@@ -107,8 +112,13 @@ class PreferencesActivity : AppCompatActivity() {
         animationDrawable.start()
     }
 
+    //Util class holding helper functions for getting urls and manipulating data on User device
     var util = Util()
 
+    // Informs the user data has been saved
+    //      (in reality data is saved after every modification to list, but displaying a message every time would be annoying to user)
+    // On RESUT_OK MainActivity updates lists holding user-data
+    // Intent.extras does not hold the lists because the needed functions are already accessible from the Util class, no need for extra Json-parinsg
     override fun onBackPressed() {
         Toast.makeText(this,"Data saved",Toast.LENGTH_SHORT).show()
         setResult(RESULT_OK, Intent())

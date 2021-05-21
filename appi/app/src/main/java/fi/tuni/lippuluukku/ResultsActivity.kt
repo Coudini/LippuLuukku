@@ -39,6 +39,7 @@ class ResultsActivity : AppCompatActivity() {
 
         animateBackground()
 
+        //Extras from MainActivity holding url-address
         extras = intent.extras
         if(extras != null) {
             url = extras!!.getString("url").toString()
@@ -51,6 +52,7 @@ class ResultsActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = linearLayoutManager
 
+        // Starts the loading animation before async url-function is being called
         thread {
             val rotation = AnimationUtils.loadAnimation(this, R.anim.rotation)
             loadingAnimation.startAnimation(rotation)
@@ -60,10 +62,12 @@ class ResultsActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         thread {
+            //Call function to handle url from extras
             urlFunc(url)
         }
     }
 
+    //Sets up and starts the background animation
     fun animateBackground(){
         val linearLayout : LinearLayout = findViewById(R.id.layout)
         val animationDrawable : AnimationDrawable = linearLayout.getBackground() as AnimationDrawable
@@ -74,10 +78,12 @@ class ResultsActivity : AppCompatActivity() {
 
     fun urlFunc(url: String){
 
+        // Asynchronous function for loading the data from url
         downloadUrlAsync(this, url){
 
             val jsonData = JSONObject(it)
             val gson = Gson()
+            //Decodes  the json result into ResponseDataHolder data-class
             val responseResults = gson.fromJson(jsonData.toString(), ResponseDataHolder::class.java)
 
             // Stop result-images from popping while scrolling list
@@ -85,6 +91,7 @@ class ResultsActivity : AppCompatActivity() {
             recyclerView.setItemViewCacheSize(1000)
             recyclerView.adapter = RecyclerAdapter(responseResults._embedded?.events, this)
 
+            //Programmatically some parameters can only be accessed through LayoutParams
             var params : LinearLayout.LayoutParams = loadingAnimation.layoutParams as LinearLayout.LayoutParams
             params.height = 0
             params.width = 0
@@ -92,6 +99,7 @@ class ResultsActivity : AppCompatActivity() {
             loadingAnimation.layoutParams = params
             loadingAnimation.visibility = View.INVISIBLE
 
+            // If 0 events are found from url call display image and text informing user of the outcome
             if (responseResults._embedded?.events?.first() == null){
                 resultStatus.text = "Nothing found"
                 params = resultImage.layoutParams as LinearLayout.LayoutParams
@@ -103,6 +111,7 @@ class ResultsActivity : AppCompatActivity() {
         }
     }
 
+    // Seperate thread asynchronous function for downloading data from the url
     fun downloadUrlAsync(context: Activity, url:String, callback:(result:String?)->Unit):Unit{
         thread{
             var data = getUrl(url)
@@ -112,6 +121,7 @@ class ResultsActivity : AppCompatActivity() {
         }
     }
 
+    // Returns the url response as a String
     fun getUrl(url : String?) : String {
         val myUrl = URL(url)
         val conn = myUrl.openConnection() as HttpURLConnection
