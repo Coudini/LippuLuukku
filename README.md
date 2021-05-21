@@ -30,7 +30,7 @@ Android/Kotlin
 - get device-GPS -location on start-up
 
 ## Release 2: 2021-05-21 features
-- MainActivity: User is able to pick Keywords and Locations from lists or input parameters by hand for search
+- MainActivity: User is able to pick Keywords and Locations from lists or input parameters by hand for search, Gps also possible
 - PreferencesActivity: User is able to edit lists for Keywords and Locations (add / delete)
 - PreferencesActivity: Creates permanent data on user device consisting of lists for Keywords and Locations, Save data, Load data
 - ResultsActivity: Shows events from TicketMaster to user found according to search parameters
