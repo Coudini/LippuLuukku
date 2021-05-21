@@ -20,6 +20,7 @@ import org.json.JSONObject
 import com.google.gson.Gson
 import fi.tuni.lippuluukku.model.ResponseDataHolder
 
+// shows results from api call on a RecyclerView list
 class ResultsActivity : AppCompatActivity() {
 
     lateinit var loadingAnimation : ImageView
