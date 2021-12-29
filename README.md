@@ -39,19 +39,11 @@ Android/Kotlin
 ## Screenshots
 <img width="260" alt="ss1" src="https://user-images.githubusercontent.com/56744277/147662423-107333ef-c368-4fa3-8c2a-71eef77b2a97.jpg">
 <img width="260" alt="ss" src="https://user-images.githubusercontent.com/56744277/147662438-811f97b8-e6de-44a8-a2fb-81229c8c0fed.jpg">
-<img width="260" alt="ss" src="">
-<img width="260" alt="ss" src="">
-<img width="260" alt="ss" src="">
-<img width="260" alt="ss" src="">
-<img width="260" alt="ss" src="">
-![Screenshot_20211229_132958_fi tuni lippuluukku]()
-![Screenshot_20211229_133020_fi tuni lippuluukku](https://user-images.githubusercontent.com/56744277/147662453-dd8db61f-23dd-43df-b788-c112decb9d75.jpg)
-![Screenshot_20211229_133057_fi tuni lippuluukku](https://user-images.githubusercontent.com/56744277/147662473-a348d145-d379-4613-9c62-91b4058d96ab.jpg)
-![Screenshot_20211229_133109_com google android apps maps](https://user-images.githubusercontent.com/56744277/147662480-ea1457b1-612e-4c78-adcd-e735bcb4614c.jpg)
-![Screenshot_20211229_133128_com android chrome](https://user-images.githubusercontent.com/56744277/147662492-597ce8f2-3fc9-4915-9d3e-cbb1204057be.jpg)
-![Screenshot_20211229_133217_fi tuni lippuluukku](https://user-images.githubusercontent.com/56744277/147662498-f289792b-d0c9-4dca-a486-d43f4c084c5e.jpg)
-
-
+<img width="260" alt="ss" src="https://user-images.githubusercontent.com/56744277/147662453-dd8db61f-23dd-43df-b788-c112decb9d75.jpg">
+<img width="260" alt="ss" src="https://user-images.githubusercontent.com/56744277/147662473-a348d145-d379-4613-9c62-91b4058d96ab.jpg">
+<img width="260" alt="ss" src="https://user-images.githubusercontent.com/56744277/147662480-ea1457b1-612e-4c78-adcd-e735bcb4614c.jpg">
+<img width="260" alt="ss" src="https://user-images.githubusercontent.com/56744277/147662492-597ce8f2-3fc9-4915-9d3e-cbb1204057be.jpg">
+<img width="260" alt="ss" src="https://user-images.githubusercontent.com/56744277/147662498-f289792b-d0c9-4dca-a486-d43f4c084c5e.jpg">
 
 ## Known bugs
 - None
