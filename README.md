@@ -15,8 +15,6 @@
 ## Target
 Android/Kotlin
 
-## GooglePlay/Appstore Link
--
 
 ## Draft of basic functionality diagram
 <img width="827" alt="lippuluukku" src="https://user-images.githubusercontent.com/56744277/117538075-2662ba80-b00d-11eb-95d3-bf58f00656fe.png">
@@ -37,6 +35,17 @@ Android/Kotlin
 - ResultsActivity: OnClick shows user more info about the event in dropdown, redirects user to GoogleMaps event location or Ticketmaster event ticket sales
 - ScreenCast: https://youtu.be/RaVMOUTEe8w 
 - [![LippuLuukku](https://img.youtube.com/vi/RaVMOUTEe8w/0.jpg)](https://www.youtube.com/watch?v=RaVMOUTEe8w "LippuLuukku")
+
+## Screenshots
+![Screenshot_20211229_132942_fi tuni lippuluukku](https://user-images.githubusercontent.com/56744277/147662423-107333ef-c368-4fa3-8c2a-71eef77b2a97.jpg)
+![Screenshot_20211229_132958_fi tuni lippuluukku](https://user-images.githubusercontent.com/56744277/147662438-811f97b8-e6de-44a8-a2fb-81229c8c0fed.jpg)
+![Screenshot_20211229_133020_fi tuni lippuluukku](https://user-images.githubusercontent.com/56744277/147662453-dd8db61f-23dd-43df-b![Screenshot_20211229_133057_fi tuni lippuluukku](https://user-images.githubusercontent.com/56744277/147662473-a348d145-d379-4613-9c62-91b4058d96ab.jpg)
+788-c112decb9d75.jpg)
+![Screenshot_20211229_133109_com google android apps maps](https://user-images.githubusercontent.com/56744277/147662480-ea1457b1-612e-4c78-adcd-e735bcb4614c.jpg)
+![Screenshot_20211229_133128_com android chrome](https://user-images.githubusercontent.com/56744277/147662492-597ce8f2-3fc9-4915-9d3e-cbb1204057be.jpg)
+![Screenshot_20211229_133217_fi tuni lippuluukku](https://user-images.githubusercontent.com/56744277/147662498-f289792b-d0c9-4dca-a486-d43f4c084c5e.jpg)
+
+
 
 ## Known bugs
 - None
