@@ -37,6 +37,7 @@ Android/Kotlin
 - [![LippuLuukku](https://img.youtube.com/vi/RaVMOUTEe8w/0.jpg)](https://www.youtube.com/watch?v=RaVMOUTEe8w "LippuLuukku")
 
 ## Screenshots
+<p float="left">
 <img width="260" alt="ss1" src="https://user-images.githubusercontent.com/56744277/147662423-107333ef-c368-4fa3-8c2a-71eef77b2a97.jpg">
 <img width="260" alt="ss" src="https://user-images.githubusercontent.com/56744277/147662438-811f97b8-e6de-44a8-a2fb-81229c8c0fed.jpg">
 <img width="260" alt="ss" src="https://user-images.githubusercontent.com/56744277/147662453-dd8db61f-23dd-43df-b788-c112decb9d75.jpg">
@@ -44,6 +45,7 @@ Android/Kotlin
 <img width="260" alt="ss" src="https://user-images.githubusercontent.com/56744277/147662480-ea1457b1-612e-4c78-adcd-e735bcb4614c.jpg">
 <img width="260" alt="ss" src="https://user-images.githubusercontent.com/56744277/147662492-597ce8f2-3fc9-4915-9d3e-cbb1204057be.jpg">
 <img width="260" alt="ss" src="https://user-images.githubusercontent.com/56744277/147662498-f289792b-d0c9-4dca-a486-d43f4c084c5e.jpg">
+ </p>
 
 ## Known bugs
 - None
