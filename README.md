@@ -37,6 +37,7 @@ Android/Kotlin
 - [![LippuLuukku](https://img.youtube.com/vi/RaVMOUTEe8w/0.jpg)](https://www.youtube.com/watch?v=RaVMOUTEe8w "LippuLuukku")
 
 ## Screenshots
+<img width="130" alt="ss1" src="https://user-images.githubusercontent.com/56744277/147662423-107333ef-c368-4fa3-8c2a-71eef77b2a97.jpg">
 ![Screenshot_20211229_132942_fi tuni lippuluukku](https://user-images.githubusercontent.com/56744277/147662423-107333ef-c368-4fa3-8c2a-71eef77b2a97.jpg)
 ![Screenshot_20211229_132958_fi tuni lippuluukku](https://user-images.githubusercontent.com/56744277/147662438-811f97b8-e6de-44a8-a2fb-81229c8c0fed.jpg)
 ![Screenshot_20211229_133020_fi tuni lippuluukku](https://user-images.githubusercontent.com/56744277/147662453-dd8db61f-23dd-43df-b![Screenshot_20211229_133057_fi tuni lippuluukku](https://user-images.githubusercontent.com/56744277/147662473-a348d145-d379-4613-9c62-91b4058d96ab.jpg)
